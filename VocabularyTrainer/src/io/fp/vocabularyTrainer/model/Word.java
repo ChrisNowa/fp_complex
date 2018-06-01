@@ -5,7 +5,7 @@ public class Word {
 public String word;
 public int orderNumber;
 public Language language;
-//Beispiel Dennis
+//Beispiel Dennis x
 
 public Word(String word, int orderNumber, Language language) {
 	this.word = word;
