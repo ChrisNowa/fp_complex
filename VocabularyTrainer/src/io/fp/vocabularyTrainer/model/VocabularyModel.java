@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-import com.sun.org.apache.bcel.internal.generic.GOTO;
+//import com.sun.org.apache.bcel.internal.generic.GOTO;
 
 public class VocabularyModel {
 	private ArrayList<Word> wordList;
