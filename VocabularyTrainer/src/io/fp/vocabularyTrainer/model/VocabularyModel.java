@@ -92,7 +92,7 @@ public class VocabularyModel {
 
 		return word;
 	}
-  // Hier wird ein Wort zurückgegeben, über den Wort Namen
+  // Hier wird ein Wort zurueckgegeben, Ueber den Wort Namen
 	public Word getWord1(String wordName) {
 		Word word = null;
 		for (Word word1 : wordList) {

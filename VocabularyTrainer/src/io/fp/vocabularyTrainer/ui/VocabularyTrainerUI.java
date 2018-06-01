@@ -49,9 +49,9 @@ public class VocabularyTrainerUI extends Application {
 
 	public void init() throws Exception {
 		model = new VocabularyModel();
-		translationSentenceV = new Label("Übersetze das Wort");
+		translationSentenceV = new Label("Uebersetze das Wort");
 		textInputFieldV = new TextField();
-		textInputFieldV.setPromptText("Übersetzung");
+		textInputFieldV.setPromptText("Uebersetzung");
 		textInputFieldV.setPrefColumnCount(20);
 		//Hier werden die Choice Boxen initialisiert. Die mit V sind die vom Trainer, die mit D vom Wörterbuch
 		//Am Anfang bekommen sie Deutsch und Englisch zugewiesen, um NullPointer bei den Labels zu vermeiden.
@@ -70,7 +70,7 @@ public class VocabularyTrainerUI extends Application {
 		choiceWord2D = new ChoiceBox<>();
 		choiceWord2D.setItems(FXCollections.observableArrayList(choiceWord1V.getItems()));
 		choiceWord2D.setValue(Language.ENGLISH);
-		//Word1D und Word2D sind die beiden Textfelder des Wörterbuchs
+		//Word1D und Word2D sind die beiden Textfelder des Woerterbuchs
 		word1D = new TextField();
 		word1D.setPromptText(choiceWord1D.getValue().toString());
 		word1D.setPrefColumnCount(20);
@@ -94,7 +94,7 @@ public class VocabularyTrainerUI extends Application {
 		languageDirectionV.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
 		// Der ConfirmV button bestätigt die Eingabe beim Trainer. Hier muss noch geprüft werden, ob das Wort
 		//überhaupt im Wörterbuch ist, sonst kommt ie NullPointerException :(
-		confirmV = new Button("Bestätigen");
+		confirmV = new Button("Bestaetigen");
 		confirmV.setOnAction(e -> {
 			if (!textInputFieldV.getText().toString().isEmpty()) {
 				Word word = model.getWord1(textInputFieldV.getText());
@@ -118,6 +118,9 @@ public class VocabularyTrainerUI extends Application {
 			Language language = choiceWord1V.getValue();
 			choiceWord1V.setValue(choiceWord2V.getValue());
 			choiceWord2V.setValue(language);
+			//Set Text funktioniert nicht richtig, hier bekomme ich dann eine Art Choice Box zurueck. Evtl. ist die Ueberlegung,
+			//ob man ein komplett neues Wort gibt, da theoretisch dadurch, die L�sung abgerufen werden kann.
+			wordV.setText(choiceWord2V.toString());
 			languageDirectionV.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
 
 		});
