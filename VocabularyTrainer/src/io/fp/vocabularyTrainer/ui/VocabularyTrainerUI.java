@@ -134,6 +134,9 @@ public class VocabularyTrainerUI extends Application {
 			//Die untere Zeile wurde einfach aus der init() kopiert.
 			wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 			languageDirectionV.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+			//Logik fuer Counter
+			model.counter(false);
+			counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 
 		});
 		//Fügt die Wörter in das Wörtbuch ein. Hier sollen keine Duplikate entstehen. 
