@@ -112,15 +112,17 @@ public class VocabularyTrainerUI extends Application {
 			}
 
 		});
-		//Ändert die Übersetzungsrichtung des Trainers
+		//Aendert die Übersetzungsrichtung des Trainers
 		changeDirectionV = new Button("Uebersetzungsrichtung aendern");
 		changeDirectionV.setOnAction(e -> {
 			Language language = choiceWord1V.getValue();
 			choiceWord1V.setValue(choiceWord2V.getValue());
 			choiceWord2V.setValue(language);
-			//Set Text funktioniert nicht richtig, hier bekomme ich dann eine Art Choice Box zurueck. Evtl. ist die Ueberlegung,
-			//ob man ein komplett neues Wort gibt, da theoretisch dadurch, die L�sung abgerufen werden kann.
-			wordV.setText(choiceWord2V.toString());
+			
+			//Hier wurde nun die Anpassung getroffen, dass wenn sich das Wort aendert
+			//ein neues Vokabelpaar initialisiert wird, somit funktioniert diese Methode nun.
+			//Die untere Zeile wurden einfach aus der init() kopiert.
+			wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 			languageDirectionV.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
 
 		});
@@ -147,7 +149,7 @@ public class VocabularyTrainerUI extends Application {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Wort hinzufuegen");
 				alert.setHeaderText("Fehler");
-				alert.setContentText("Eintrag für " + word1D.getText() + " bereits vorhanden");
+				alert.setContentText("Eintrag fuer " + word1D.getText() + " bereits vorhanden");
 				alert.showAndWait();
 			}
 				word1D.clear();
@@ -189,7 +191,7 @@ public class VocabularyTrainerUI extends Application {
      	box1.getChildren().addAll(translationSentenceV, wordV,languageDirectionV,flow1,flow2,changeDirectionV,resultV);
      	tab1.setContent(box1);
 		Tab tab2 = new Tab();
-		tab2.setText("Wörterbuch");
+		tab2.setText("Woerterbuch");
 		VBox box2 = new VBox();
 		FlowPane flow3 = new FlowPane();
 		FlowPane flow4 = new FlowPane();
