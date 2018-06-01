@@ -1,15 +1,18 @@
 package io.fp.vocabularyTrainer.model;
 
+import java.util.ArrayList;
+
 public class Word {
  //Klasse für die Wörter. Ist denke ich selbsterklärend.
-public String word;
-public int orderNumber;
-public Language language;
+private String word;
+private ArrayList<Integer> orderNumbers;
+private Language language;
 
 
-public Word(String word, int orderNumber, Language language) {
+public Word(String word, int oderNumber, Language language) {
 	this.word = word;
-	this.orderNumber = orderNumber;
+	orderNumbers = new ArrayList<>();
+	orderNumbers.add(oderNumber);
 	this.language = language;
 }
 
@@ -17,18 +20,12 @@ public String getWord() {
 	return word;
 }
 
-
-
 public void setWord(String word) {
 	this.word = word;
 }
 
-public int getOrderNumber() {
-	return orderNumber;
-}
-
-public void setOrderNumber(int orderNumber) {
-	this.orderNumber = orderNumber;
+public ArrayList<Integer> getOrderNumbers() {
+	return orderNumbers;
 }
 
 public Language getLanguage() {

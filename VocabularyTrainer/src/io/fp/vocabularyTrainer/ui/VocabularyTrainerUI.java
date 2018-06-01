@@ -1,6 +1,6 @@
 package io.fp.vocabularyTrainer.ui;
 
-import io.fp.vocabularyTrainer.model.Language; 
+import io.fp.vocabularyTrainer.model.Language;  
 import io.fp.vocabularyTrainer.model.VocabularyModel;
 import io.fp.vocabularyTrainer.model.Word;
 import io.fp.vocabularyTrainer.model.WordException;
@@ -103,7 +103,7 @@ public class VocabularyTrainerUI extends Application {
 			if (!textInputFieldV.getText().toString().isEmpty()) {
 				Word word = model.getWord1(textInputFieldV.getText());
 				Word word2 = model.getWord1(wordV.getText());
-				if (model.compareOrderNumbers(word.getOrderNumber(), word2.getOrderNumber()) == true) {
+				if (model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == true) {
 					resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
 					wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 					textInputFieldV.clear();;
@@ -111,7 +111,7 @@ public class VocabularyTrainerUI extends Application {
 					model.counter(true);
 					counterLabel.setText("Richtige Antworten: " + model.getCounter());
 				}
-				if (model.compareOrderNumbers(word.getOrderNumber(), word2.getOrderNumber()) == false) {
+				if (model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == false) {
 					resultV.setText("Die Uebersetzung war falsch! Versuche es noch einmal!");
 					textInputFieldV.clear();;
 					//Logik fuer Counter
