@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-//import com.sun.org.apache.bcel.internal.generic.GOTO;
+
+// Was macht dieser Import? Wenn ich Ihn auskommentiere, funktioniert die Logik bei einer Falscheingabe nicht
+// Lt. Exception in Zeile 106 bei der UI
+// import com.sun.org.apache.bcel.internal.generic.GOTO;
 
 public class VocabularyModel {
 	private ArrayList<Word> wordList;
 	private int orderNumbers;
 	private Random random;
+	private int counter;
 
 	public VocabularyModel() {
 		wordList = new ArrayList<Word>();
@@ -18,6 +22,7 @@ public class VocabularyModel {
 		//Daher auch orderNumbers = 1, da addForStart
 		orderNumbers = 1;
 		random = new Random();
+		counter = 0;
 	}
 
 	public void addNewWordPair(String l1Word, Language l1, String l2Word, Language l2) throws WordException {
@@ -126,6 +131,22 @@ public class VocabularyModel {
 			wordNames.add(word.getWord());
 		}
 		return wordNames.toString();
+	}
+	
+//Counter Logik:  Beim Trainieren soll im Label mitgezählt werden, wieviele richtige
+//Antworten man am Stück schafft.
+	
+	public void counter(boolean choice) {
+		if(choice == true) {
+			counter ++;
+		}
+		if(choice == false) {
+			counter = 0;
+		}
+	}
+	
+	public String getCounter() {
+		return ""+counter;
 	}
 
 }

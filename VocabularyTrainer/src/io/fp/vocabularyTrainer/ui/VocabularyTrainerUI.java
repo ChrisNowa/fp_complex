@@ -36,6 +36,7 @@ public class VocabularyTrainerUI extends Application {
 	private Label resultV;
 	private Button changeDirectionV;
 	private Label sentenceD;
+	private Label counterLabel;
 	private TextField word1D;
 	private TextField word2D;
 	private Button addD;
@@ -92,6 +93,9 @@ public class VocabularyTrainerUI extends Application {
 		//Das muss noch verbessert werden
 		languageDirectionV = new Label();
 		languageDirectionV.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+		//Counter Label
+		counterLabel = new Label();
+		counterLabel.setText("Richtige Antworten: " + model.getCounter());
 		// Der ConfirmV button bestätigt die Eingabe beim Trainer. Hier muss noch geprüft werden, ob das Wort
 		//überhaupt im Wörterbuch ist, sonst kommt ie NullPointerException :(
 		confirmV = new Button("Bestaetigen");
@@ -103,10 +107,16 @@ public class VocabularyTrainerUI extends Application {
 					resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
 					wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 					textInputFieldV.clear();;
+					//Logik fuer Counter
+					model.counter(true);
+					counterLabel.setText("Richtige Antworten: " + model.getCounter());
 				}
 				if (model.compareOrderNumbers(word.getOrderNumber(), word2.getOrderNumber()) == false) {
 					resultV.setText("Die Uebersetzung war falsch! Versuche es noch einmal!");
 					textInputFieldV.clear();;
+					//Logik fuer Counter
+					model.counter(false);
+					counterLabel.setText("Richtige Antworten: " + model.getCounter());
 
 				}
 			}
@@ -121,7 +131,7 @@ public class VocabularyTrainerUI extends Application {
 			
 			//Hier wurde nun die Anpassung getroffen, dass wenn sich das Wort aendert
 			//ein neues Vokabelpaar initialisiert wird, somit funktioniert diese Methode nun.
-			//Die untere Zeile wurden einfach aus der init() kopiert.
+			//Die untere Zeile wurde einfach aus der init() kopiert.
 			wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 			languageDirectionV.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
 
@@ -177,7 +187,7 @@ public class VocabularyTrainerUI extends Application {
 		primaryStage.show();
 
 	}
-//Der Scene Graph besteht aus einer TabPane mit zwei Tabs. Die Tabs enthalten eine VBox, welche selbst
+	//Der Scene Graph besteht aus einer TabPane mit zwei Tabs. Die Tabs enthalten eine VBox, welche selbst
 	//die einzelnen Elemente enthalten, manche in FlowPanes verpackt. Hier muss am Ende noch Design und Ordnung verbessert werden.
 	private Parent createSceneGraph() {
 		TabPane pane = new TabPane();
@@ -188,7 +198,7 @@ public class VocabularyTrainerUI extends Application {
 		flow2.getChildren().addAll(textInputFieldV,confirmV);
 		flow1.getChildren().addAll(choiceWord1V, choiceWord2V);
 		tab1.setText("Trainieren");
-     	box1.getChildren().addAll(translationSentenceV, wordV,languageDirectionV,flow1,flow2,changeDirectionV,resultV);
+     	box1.getChildren().addAll(translationSentenceV, wordV,languageDirectionV,flow1,flow2,changeDirectionV,resultV, counterLabel);
      	tab1.setContent(box1);
 		Tab tab2 = new Tab();
 		tab2.setText("Woerterbuch");
@@ -203,6 +213,7 @@ public class VocabularyTrainerUI extends Application {
 		pane.getTabs().add(tab2);
 		//Hier wird festgelegt, dass die Tabs nicht über ein x geschossen werden können.
 		pane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+		
 		
         return pane;
 
