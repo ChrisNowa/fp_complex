@@ -36,13 +36,14 @@ public class VocabularyModel {
 		alternativeWordList.addAll(wordList);
 		ArrayList<Word> alternativeWordList2 = new ArrayList<>();
 		// Hier verhindere ich, dass zweimal das selbe Wort eingegeben wird.
+		
 		if (l1Word.equals(l2Word)) {
 			throw new WordException("Das Wort ist bereits vorhanden");
 
 		}
-		if (l1Word.isEmpty() || l2Word.isEmpty()) {
+		if (word1.getWord().length() < 1 || word1.getWord().length()<1) {
 			throw new WordException("Bitte geben sie das zweite Wort ein");
-
+            
 		}
 	
 		for (Word word : alternativeWordList) {

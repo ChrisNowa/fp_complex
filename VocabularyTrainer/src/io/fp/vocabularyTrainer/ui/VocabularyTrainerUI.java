@@ -150,6 +150,14 @@ public class VocabularyTrainerUI extends Application {
 				String word1 = word1D.getText().toString();
 				String word2 = word2D.getText().toString();
 				
+				if(word1D.getText().isEmpty() || word2D.getText().isEmpty()) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Wort hinzufuegen");
+					alert.setHeaderText("Fehler");
+					alert.setContentText("Bitte beide Felder eintragen");
+					alert.showAndWait();
+				}
+				else {
 				try {
 				model.addNewWordPair(word1, choiceWord1D.getValue(), word2,choiceWord2D.getValue());
 				Alert alert = new Alert(AlertType.INFORMATION);
@@ -165,6 +173,7 @@ public class VocabularyTrainerUI extends Application {
 				alert.setContentText("Eintrag fuer " + word1D.getText() + " bereits vorhanden");
 				alert.showAndWait();
 			}
+				}
 				word1D.clear();
 				word2D.clear();
 			    
