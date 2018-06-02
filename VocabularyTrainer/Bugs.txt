@@ -14,3 +14,12 @@ Fehler Woerterbuch:
 
 View:
 1. Es sollte noch das Design verschoenert werden.
+
+DAO:
+1. Ich faende es ziemlich cool, wenn wir wie einen Tab "Highscore" machen
+	Logik sieht ungefaehr so aus:
+	Wenn du irgendwann ein Wort falsch hast, oder die Richtung aenderst und somit
+	dein Counter auf 0 gesetzt wird, wird zunaechst in der Highscore.txt ueberprueft,
+	ob du unter den Top 5 bist. Wenn ja, geht ein Alert oder aehnliches auf, wo du deinen 
+	Namen eingibst. Dieser Name wird dann in der Highscore.txt gespeichert, und selbstverstaendlich
+	auch im Tab angezeigt.
