@@ -10,10 +10,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import io.fp.vocabularyTrainer.dao.VocabularyTrainerDao;
+import io.fp.vocabularyTrainer.dao.VocabularyTrainerDAO;
 import io.fp.vocabularyTrainer.model.Word;
 
-public class VocabularyTrainerDAOImpl implements VocabularyTrainerDao {
+public class VocabularyTrainerDAOImpl implements VocabularyTrainerDAO {
 
 	private String wordBookFilePath;
 	private String highScoreFilePath;

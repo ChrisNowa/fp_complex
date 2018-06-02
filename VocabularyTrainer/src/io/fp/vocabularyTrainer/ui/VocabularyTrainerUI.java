@@ -1,10 +1,16 @@
 package io.fp.vocabularyTrainer.ui;
 
+import java.io.IOException; 
+import java.util.List;
+
+import io.fp.vocabularyTrainer.dao.VocabularyTrainerDAO;
+import io.fp.vocabularyTrainer.daoImpl.VocabularyTrainerDAOImpl;
 import io.fp.vocabularyTrainer.model.Language;   
 import io.fp.vocabularyTrainer.model.VocabularyModel;
 import io.fp.vocabularyTrainer.model.Word;
 import io.fp.vocabularyTrainer.model.WordException;
 import javafx.application.Application;
+import javafx.application.Application.Parameters;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
@@ -47,8 +53,19 @@ public class VocabularyTrainerUI extends Application {
 	private ChoiceBox<Language> choiceWord2V;
 	private ChoiceBox<Language> choiceWord1D;
 	private ChoiceBox<Language> choiceWord2D;
+	//hier wird das dao als Datenfeld genannt.
+	private VocabularyTrainerDAO dao;
 
 	public void init() throws Exception {
+		//init dao
+		Parameters params = getParameters();
+		List<String> paramList = params.getRaw();
+		if (paramList.size()<1) {
+			throw new IOException("No parameter defined for file name!");
+		}
+		dao = new VocabularyTrainerDAOImpl(paramList.get(0), paramList.get(1));
+		
+		//init rest
 		model = new VocabularyModel();
 		translationSentenceV = new Label("Uebersetze das Wort");
 		textInputFieldV = new TextField();

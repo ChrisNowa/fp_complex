@@ -6,7 +6,7 @@ import java.util.SortedMap;
 
 import io.fp.vocabularyTrainer.model.Word;
 
-public interface VocabularyTrainerDao {
+public interface VocabularyTrainerDAO {
 
 //Fuer das Woerterbuch	
 ArrayList<Word> createWortBook() throws IOException;
