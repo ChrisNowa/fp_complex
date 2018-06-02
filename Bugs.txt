@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Fehler Vokabeltrainer:
 1. Wählt man eine ChoiceBox aus(Bsp.:Latin), so kann in der anderen auch Latin ausgewaehlt werden.
 2. Aendert man in der ChoiceBox einen Wert, so aendert sie das Label languageDirectionV nicht.(Das indem z.b: Von German nach Englisch steht.
@@ -11,3 +12,6 @@ Fehler Woerterbuch:
 
 View:
 1. Es sollte noch das Design verschoenert werden.
+=======
+test chris
+>>>>>>> branch 'master' of https://github.com/ChrisNowa/fp_complex.git
