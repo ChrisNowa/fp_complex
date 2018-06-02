@@ -57,13 +57,13 @@ public class VocabularyTrainerUI extends Application {
 	private VocabularyTrainerDAO dao;
 
 	public void init() throws Exception {
-		//init dao
-		Parameters params = getParameters();
-		List<String> paramList = params.getRaw();
-		if (paramList.size()<1) {
-			throw new IOException("No parameter defined for file name!");
-		}
-		dao = new VocabularyTrainerDAOImpl(paramList.get(0), paramList.get(1));
+//		//init dao
+//		Parameters params = getParameters();
+//		List<String> paramList = params.getRaw();
+//		if (paramList.size()<1) {
+//			throw new IOException("No parameter defined for file name!");
+//		}
+//		dao = new VocabularyTrainerDAOImpl(paramList.get(0), paramList.get(1));
 		
 		//init rest
 		model = new VocabularyModel();
