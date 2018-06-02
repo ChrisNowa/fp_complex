@@ -7,7 +7,7 @@ import java.util.Random;
 // Was macht dieser Import? Wenn ich Ihn auskommentiere, funktioniert die Logik bei einer Falscheingabe nicht
 // Lt. Exception in Zeile 106 bei der UI
 // import com.sun.org.apache.bcel.internal.generic.GOTO;
-
+//Bei mir kommt der Import nicht vor
 public class VocabularyModel {
 	private ArrayList<Word> wordList;
 	private int orderNumbers;
@@ -16,7 +16,7 @@ public class VocabularyModel {
 
 	public VocabularyModel() {
 		wordList = new ArrayList<Word>();
-		// Add for Start fügt schonmal einen Wörtersatz hinzu. Siehe Methode
+		// Add for Start fügt schonmal einen Woertersatz hinzu. Siehe Methode
 		addForStart();
 		// Daher auch orderNumbers = 1, da addForStart
 		orderNumbers = 1;
@@ -27,11 +27,11 @@ public class VocabularyModel {
 	public void addNewWordPair(String l1Word, Language l1, String l2Word, Language l2) throws WordException {
 		Word word1 = new Word(l1Word, orderNumbers, l1);
 		Word word2 = new Word(l2Word, orderNumbers, l2);
-		// Die Alternativen WordListen habe ich hinzugefügt, um zu vermeiden, dass die
-		// WortListe während des Lesens
+		// Die Alternativen WordListen habe ich hinzugefuegt, um zu vermeiden, dass die
+		// WortListe waehrend des Lesens
 		// erweitert wird(durch add), um eine Exception zu vermeiden. Bei einem
 		// Sonderfall schmeißt es momentan dennoch diese
-		// Exception, das Programm funktioniert aber einwandfrei.
+		// Exception, das Programm funktioniert aber einwandfrei. Nun mit der Methode addAll behandelt.
 		ArrayList<Word> alternativeWordList = new ArrayList<>();
 		alternativeWordList.addAll(wordList);
 		ArrayList<Word> alternativeWordList2 = new ArrayList<>();
@@ -41,17 +41,13 @@ public class VocabularyModel {
 			throw new WordException("Das Wort ist bereits vorhanden");
 
 		}
-		if (word1.getWord().length() < 1 || word1.getWord().length()<1) {
-			throw new WordException("Bitte geben sie das zweite Wort ein");
-            
-		}
 	
 		for (Word word : alternativeWordList) {
 		
 		if(word.getWord().equals(word1.getWord())){
 			for(Word wort: alternativeWordList) {
 				if(wort.getWord().equals(word2.getWord())) {
-					throw new WordException("Beide Wörter bereits enthalten");
+					throw new WordException("Beide Woerter bereits enthalten");
 				}
 			}
 		}
@@ -59,19 +55,19 @@ public class VocabularyModel {
 		if (word.getWord().equals(word1.getWord())) {
 				word1.getOrderNumbers().add((orderNumbers));
 				wordList.add(word2);
-				
+				orderNumbers ++;
 			} else if (word.getWord().equals(word2.getWord())) {
 				word2.getOrderNumbers().add((orderNumbers));
 				wordList.add(word1);
-
+               orderNumbers++;
 			}
 		}
 		// Hier wird die nun aktualisierte WordList der zweiten alternativenListe
-		// hinzugefügt
+		// hinzugefuegt
 		alternativeWordList2.addAll(wordList);
-		// Wenn bis jetzt noch nicht hinzugefügt wurde, sind die beiden alternativen
+		// Wenn bis jetzt noch nicht hinzugefuegt wurde, sind die beiden alternativen
 		// Listen gleich.
-		// Dann werden beide Wörter hinzugefügt.
+		// Dann werden beide Wörter hinzugefuegt.
 		if (alternativeWordList.equals(alternativeWordList2)) {
 			wordList.add(word1);
 			wordList.add(word2);
@@ -127,11 +123,12 @@ public class VocabularyModel {
 		return word;
 	}
 
-	// Vergleicht OrderNumbers
+	// Vergleicht OrderNumbers. Jetzt sind es zwei ArrayListen. Man schaut die Nummern der ersten Liste einzeln an und überprueft,
+	// ob die zweite ArrayListe eine dieser Nummern enthaelt.Tut sie dass, so ist die Ueberprüfung richtig.
 	public boolean compareOrderNumbers(ArrayList<Integer> arrayList, ArrayList<Integer> arrayList2) {
 		boolean compare = false;
 		for (int number : arrayList) {
-			if (arrayList.contains(number)) {
+			if (arrayList2.contains(number)) {
 				compare = true;
 			}
 		}

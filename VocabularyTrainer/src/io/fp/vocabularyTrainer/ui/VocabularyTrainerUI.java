@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 
 
 public class VocabularyTrainerUI extends Application {
-	//Endung V betrifft den Vokabeltrainer, Endung D betrifft das Wörterbuch
+	//Endung V betrifft den Vokabeltrainer, Endung D betrifft das Woerterbuch
 	private VocabularyModel model;
 	private Label translationSentenceV;
 	private Label wordV;
@@ -54,10 +54,10 @@ public class VocabularyTrainerUI extends Application {
 		textInputFieldV = new TextField();
 		textInputFieldV.setPromptText("Uebersetzung");
 		textInputFieldV.setPrefColumnCount(20);
-		//Hier werden die Choice Boxen initialisiert. Die mit V sind die vom Trainer, die mit D vom Wörterbuch
+		//Hier werden die Choice Boxen initialisiert. Die mit V sind die vom Trainer, die mit D vom Woerterbuch
 		//Am Anfang bekommen sie Deutsch und Englisch zugewiesen, um NullPointer bei den Labels zu vermeiden.
-		//Man muss noch schauen, dass beim ändern der ChoiceBoxen ist labels und TextFelder verändert werden.
-		//Diese wären meiner Meinung nach der PromptText von word1D und word2D, sowie der Text von 
+		//Man muss noch schauen, dass beim aendern der ChoiceBoxen ist labels und TextFelder veraendert werden.
+		//Diese waeren meiner Meinung nach der PromptText von word1D und word2D, sowie der Text von 
 		//languageDirectionV und das Wort von wordV
 		choiceWord1V = new ChoiceBox<>();
 		choiceWord1V.setItems(FXCollections.observableArrayList(Language.values()));
@@ -96,13 +96,14 @@ public class VocabularyTrainerUI extends Application {
 		//Counter Label
 		counterLabel = new Label();
 		counterLabel.setText("Richtige Antworten: " + model.getCounter());
-		// Der ConfirmV button bestätigt die Eingabe beim Trainer. Hier muss noch geprüft werden, ob das Wort
-		//überhaupt im Wörterbuch ist, sonst kommt ie NullPointerException :(
+		// Der ConfirmV button bestaetigt die Eingabe beim Trainer. Hier muss noch geprüft werden, ob das Wort
+		//ueberhaupt im Wörterbuch ist, sonst kommt ie NullPointerException :(
 		confirmV = new Button("Bestaetigen");
 		confirmV.setOnAction(e -> {
 			if (!textInputFieldV.getText().toString().isEmpty()) {
 				Word word = model.getWord1(textInputFieldV.getText());
 				Word word2 = model.getWord1(wordV.getText());
+				//Die Methode so veraendert, das sie für ArrayList funktioniert
 				if (model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == true) {
 					resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
 					wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
@@ -122,14 +123,14 @@ public class VocabularyTrainerUI extends Application {
 			}
 
 		});
-		//Aendert die Übersetzungsrichtung des Trainers
+		//Aendert die Uebersetzungsrichtung des Trainers
 		changeDirectionV = new Button("Uebersetzungsrichtung aendern");
 		changeDirectionV.setOnAction(e -> {
 			Language language = choiceWord1V.getValue();
 			choiceWord1V.setValue(choiceWord2V.getValue());
 			choiceWord2V.setValue(language);
 			
-			//Hier wurde nun die Anpassung getroffen, dass wenn sich das Wort aendert
+			//Hier wurde nun die Anpassung getroffen, dass wenn sich das Wort aeandert
 			//ein neues Vokabelpaar initialisiert wird, somit funktioniert diese Methode nun.
 			//Die untere Zeile wurde einfach aus der init() kopiert.
 			wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
@@ -139,7 +140,7 @@ public class VocabularyTrainerUI extends Application {
 			counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 
 		});
-		//Fügt die Wörter in das Wörtbuch ein. Hier sollen keine Duplikate entstehen. 
+		//Fuegt die Woerter in das Woertbuch ein. Hier sollen keine Duplikate entstehen. 
 		//Man kann aber mehrfach ein Wort eingeben, um Verbindungen für viele Sprachen herzustellen. 
 		//z.B: Hallo -> Hello, Hallo-> Bonjour, Hallo-> Ave. Hallo soll aber nur einmal gespeichert werden.
 		//Die Probleme der Methode sollte eigentlich ausgemerzt sein. Es wird noch manchmal eine Exception geworfen, aber das Programm funktioniert 
@@ -149,7 +150,7 @@ public class VocabularyTrainerUI extends Application {
 			 
 				String word1 = word1D.getText().toString();
 				String word2 = word2D.getText().toString();
-				
+				//Neu dabei, da bei der addwortpair es nicht funktioniert hat, zu pruefen, ob eines der beiden Felder leer ist.
 				if(word1D.getText().isEmpty() || word2D.getText().isEmpty()) {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Wort hinzufuegen");
@@ -178,12 +179,12 @@ public class VocabularyTrainerUI extends Application {
 				word2D.clear();
 			    
 		});
-		//Das Wörterbuch kann hiermit persistent werden. Bis jetzt noch nicht behandelt.
+		//Das Woerterbuch kann hiermit persistent werden. Bis jetzt noch nicht behandelt.
 		persistanceD = new Button("Woerterbuch speichern");
 		persistanceD.setOnAction(e -> {
 
 		});
-		//Label, um die Dictionary Wörter zu sehen.
+		//Label, um die Dictionary Woerter zu sehen.
 		showDictionaryD = new Label();
 		//Button der einem das Dictionary zeigt.
 		getDictionaryD = new Button("Woerterbuchlist");
