@@ -2,11 +2,12 @@ Fehler Vokabeltrainer:
 1. Waehlt man eine ChoiceBox aus(Bsp.:Latin), so kann in der anderen auch Latin ausgewaehlt werden.
 2. Aendert man in der ChoiceBox einen Wert, so aendert sie das Label languageDirectionV nicht.(Das indem z.b: Von German nach Englisch steht.
 3.Aendert man die ChoiceBox, so steht momentan immer noch das Wort der zuvorigen Sprache drin. Das sollte sich beim ChoiceBox Wechsel automatisch aendern. Vielleicht muss die ChoiceBox
-f�r diese Aktionen setOnAction gesetzt werden.
+f�r diese Aktionen setOnAction gesetzt werden.
 4.Momentan werden nur die OrderNumbers ueberprueft. Ein Language Ueberpruefung muss auch stattfinden. Gibt man bei Hallo und einem gesuchten Wort in Englisch, dass lateinische Wort Ave ein, so zeigt er an, dass es richtig ist. 
 Hier muss noch beim confirmV eine Ueberpruefung rein.
 5. Wird ein Wort eingefuegt, dass gar nicht in der Woerterbuchliste steht, so folgt ein NullPointerException
 6. Gibt man ein falsches Wort zur Uebersetzung ein, wird eine Exception geworfen. @Dennis, passiert dass bei dir nicht?
+7. Delete Button für das Löschen des Wörterbuchs eingeben.
 
 Fehler Woerterbuch:
 1. Das Woerterbuch muss noch persistent werden.
