@@ -22,4 +22,4 @@ DAO:
 	dein Counter auf 0 gesetzt wird, wird zunaechst in der Highscore.txt ueberprueft,
 	ob du unter den Top 5 bist. Wenn ja, geht ein Alert oder aehnliches auf, wo du deinen 
 	Namen eingibst. Dieser Name wird dann in der Highscore.txt gespeichert, und selbstverstaendlich
-	auch im Tab angezeigt. 
+	auch im Tab angezeigt.
