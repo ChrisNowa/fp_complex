@@ -1,6 +1,6 @@
 package io.fp.vocabularyTrainer.ui;
 
-import io.fp.vocabularyTrainer.model.Language;  
+import io.fp.vocabularyTrainer.model.Language;   
 import io.fp.vocabularyTrainer.model.VocabularyModel;
 import io.fp.vocabularyTrainer.model.Word;
 import io.fp.vocabularyTrainer.model.WordException;
