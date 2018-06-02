@@ -1,0 +1,13 @@
+Fehler Vokabeltrainer:
+1. Wählt man eine ChoiceBox aus(Bsp.:Latin), so kann in der anderen auch Latin ausgewaehlt werden.
+2. Aendert man in der ChoiceBox einen Wert, so aendert sie das Label languageDirectionV nicht.(Das indem z.b: Von German nach Englisch steht.
+3.Aendert man die ChoiceBox, so steht momentan immer noch das Wort der zuvorigen Sprache drin. Das sollte sich beim ChoiceBox Wechsel automatisch aendern. Vielleicht muss die ChoiceBox für diese Aktionen setOnAction gesetzt werden.
+4.Momentan werden nur die OrderNumbers ueberprüft. Ein Language Ueberpruefung muss auch stattfinden. Gibt man bei Hallo und einem gesuchten Wort in Englisch, dass lateinische Wort Ave ein, so zeigt er an, dass es richtig ist. Hier muss noch beim confirmV eine Überprüfung rein.
+5. Wird ein Wort eingefuegt, dass gar nicht in der Woerterbuchliste steht, so folgt ein NullPointerException
+
+Fehler Woerterbuch:
+1. Das Woerterbuch muss noch persistent werden.
+
+
+View:
+1. Es sollte noch das Design verschoenert werden.
