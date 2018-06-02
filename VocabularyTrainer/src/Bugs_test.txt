@@ -1,1 +1,0 @@
-Wenn man ein Wort falsch eingibt, wird Exception geworfen. Programm laeuft jedoch weiter.
