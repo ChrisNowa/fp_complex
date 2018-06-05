@@ -95,6 +95,12 @@ public class VocabularyTrainerUI extends Application {
 		word2D = new TextField();
 		word2D.setPromptText(choiceWord2D.getValue().toString());
 		word2D.setPrefColumnCount(20);
+		choiceWord1D.setOnAction(e->{
+			word1D.setPromptText(choiceWord1D.getValue().toString());
+		});
+		choiceWord2D.setOnAction(e->{
+			word2D.setPromptText(choiceWord2D.getValue().toString());
+		});
 		//sentenceD ist damit fertig
 		sentenceD = new Label("Ein neues Wort in das Woerterbuch eintragen: ");
 		//resultV ist die Meldung nach bestätigen beim Vokalbeltrainer
