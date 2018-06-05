@@ -13,6 +13,7 @@ import javafx.application.Application;
 import javafx.application.Application.Parameters;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -219,7 +220,7 @@ public class VocabularyTrainerUI extends Application {
 
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Vokabeltrainer");
-		primaryStage.setScene(new Scene(createSceneGraph(), 600, 600));
+		primaryStage.setScene(new Scene(createSceneGraph(), 700, 700));
 		primaryStage.show();
 
 	}
@@ -235,6 +236,7 @@ public class VocabularyTrainerUI extends Application {
 		flow1.getChildren().addAll(choiceWord1V, choiceWord2V);
 		tab1.setText("Trainieren");
      	box1.getChildren().addAll(translationSentenceV, wordV,languageDirectionV,flow1,flow2,changeDirectionV,resultV, counterLabel);
+     	box1.setAlignment(Pos.TOP_CENTER);
      	tab1.setContent(box1);
 		Tab tab2 = new Tab();
 		tab2.setText("Woerterbuch");
@@ -244,6 +246,7 @@ public class VocabularyTrainerUI extends Application {
 		flow3.getChildren().addAll(choiceWord1D, choiceWord2D);
 		flow4.getChildren().addAll(word1D,word2D,addD);
 		box2.getChildren().addAll(sentenceD,flow3, flow4, persistanceD, showDictionaryD, getDictionaryD );
+		box2.setAlignment(Pos.TOP_CENTER);
 		tab2.setContent(box2);
 		pane.getTabs().add(tab1);
 		pane.getTabs().add(tab2);
