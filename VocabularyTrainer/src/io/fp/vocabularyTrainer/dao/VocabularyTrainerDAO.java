@@ -4,27 +4,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.SortedMap;
 
+import io.fp.vocabularyTrainer.model.VocabularyModel;
 import io.fp.vocabularyTrainer.model.Word;
 
 public interface VocabularyTrainerDAO {
 
-//Fuer das Woerterbuch	
-ArrayList<Word> createWortBook() throws IOException;
-	
-ArrayList<Word> readWortBook() throws IOException;
+	VocabularyModel createModel() throws IOException;
 
-void updateWortBook(ArrayList<Word> book) throws IOException;
+	VocabularyModel readModel() throws IOException;
 
-void deleteWortBook() throws IOException;
-	
-//Fuer den HighScore
-SortedMap<String, Integer> createHighScore() throws IOException;
+	void updateModel(VocabularyModel model) throws IOException;
 
-SortedMap<String, Integer> readHighScore()  throws IOException;
-
-void updateHighScore(SortedMap<String, Integer> highScore) throws IOException;
-
-void deleteHighScore() throws IOException;
-
+	void deleteModel() throws IOException;
 
 }

@@ -1,6 +1,8 @@
 package io.fp.vocabularyTrainer.model;
 
-public class WordException extends Exception{
+import java.io.Serializable;
+
+public class WordException extends Exception implements Serializable{
 
 	/**
 	 * 

@@ -1,11 +1,11 @@
 package io.fp.vocabularyTrainer.ui;
 
-import java.io.IOException; 
+import java.io.IOException;  
 import java.util.List;
 
 import io.fp.vocabularyTrainer.dao.VocabularyTrainerDAO;
 import io.fp.vocabularyTrainer.daoImpl.VocabularyTrainerDAOImpl;
-import io.fp.vocabularyTrainer.model.Language;   
+import io.fp.vocabularyTrainer.model.Language;
 import io.fp.vocabularyTrainer.model.VocabularyModel;
 import io.fp.vocabularyTrainer.model.Word;
 import io.fp.vocabularyTrainer.model.WordException;
@@ -18,22 +18,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-
 public class VocabularyTrainerUI extends Application {
-	//Endung V betrifft den Vokabeltrainer, Endung D betrifft das Woerterbuch
+	// Endung V betrifft den Vokabeltrainer, Endung D betrifft das Woerterbuch
 	private VocabularyModel model;
 	private Label translationSentenceV;
 	private Label wordV;
@@ -50,33 +49,45 @@ public class VocabularyTrainerUI extends Application {
 	private Button persistanceD;
 	private Button getDictionaryD;
 	private Label showDictionaryD;
+	private Button deleteD;
 	private ChoiceBox<Language> choiceWord1V;
 	private ChoiceBox<Language> choiceWord2V;
 	private ChoiceBox<Language> choiceWord1D;
 	private ChoiceBox<Language> choiceWord2D;
-	//hier wird das dao als Datenfeld genannt.
+	// hier wird das dao als Datenfeld genannt.
 	private VocabularyTrainerDAO dao;
 
 	public void init() throws Exception {
-//		//init dao
-//		Parameters params = getParameters();
-//		List<String> paramList = params.getRaw();
-//		if (paramList.size()<1) {
-//			throw new IOException("No parameter defined for file name!");
+//		 //init dao
+//		 Parameters params = getParameters();
+//		 List<String> paramList = params.getRaw();
+//		 if (paramList.size()<1) {
+//		 throw new IOException("No parameter defined for file name!");
+//		 }
+//		 dao = new VocabularyTrainerDAOImpl(paramList.get(0));
+//
+//		// init model
+//		try {
+//			model = dao.readModel();
+//		} catch (IOException e) {
+//			model = dao.createModel();
 //		}
-//		dao = new VocabularyTrainerDAOImpl(paramList.get(0), paramList.get(1));
-		
-		//init rest
+
+		// init rest
 		model = new VocabularyModel();
 		translationSentenceV = new Label("Uebersetze das Wort");
 		textInputFieldV = new TextField();
 		textInputFieldV.setPromptText("Uebersetzung");
 		textInputFieldV.setPrefColumnCount(20);
-		//Hier werden die Choice Boxen initialisiert. Die mit V sind die vom Trainer, die mit D vom Woerterbuch
-		//Am Anfang bekommen sie Deutsch und Englisch zugewiesen, um NullPointer bei den Labels zu vermeiden.
-		//Man muss noch schauen, dass beim aendern der ChoiceBoxen ist labels und TextFelder veraendert werden.
-		//Diese waeren meiner Meinung nach der PromptText von word1D und word2D, sowie der Text von 
-		//languageDirectionV und das Wort von wordV
+		// Hier werden die Choice Boxen initialisiert. Die mit V sind die vom Trainer,
+		// die mit D vom Woerterbuch
+		// Am Anfang bekommen sie Deutsch und Englisch zugewiesen, um NullPointer bei
+		// den Labels zu vermeiden.
+		// Man muss noch schauen, dass beim aendern der ChoiceBoxen ist labels und
+		// TextFelder veraendert werden.
+		// Diese waeren meiner Meinung nach der PromptText von word1D und word2D, sowie
+		// der Text von
+		// languageDirectionV und das Wort von wordV
 		choiceWord1V = new ChoiceBox<>();
 		choiceWord1V.setItems(FXCollections.observableArrayList(Language.values()));
 		choiceWord1V.setValue(Language.GERMAN);
@@ -89,57 +100,67 @@ public class VocabularyTrainerUI extends Application {
 		choiceWord2D = new ChoiceBox<>();
 		choiceWord2D.setItems(FXCollections.observableArrayList(choiceWord1V.getItems()));
 		choiceWord2D.setValue(Language.ENGLISH);
-		//Word1D und Word2D sind die beiden Textfelder des Woerterbuchs
+		// Word1D und Word2D sind die beiden Textfelder des Woerterbuchs
 		word1D = new TextField();
 		word1D.setPromptText(choiceWord1D.getValue().toString());
 		word1D.setPrefColumnCount(20);
 		word2D = new TextField();
 		word2D.setPromptText(choiceWord2D.getValue().toString());
 		word2D.setPrefColumnCount(20);
-		choiceWord1D.setOnAction(e->{
+		choiceWord1D.setOnAction(e -> {
 			word1D.setPromptText(choiceWord1D.getValue().toString());
+
 		});
-		choiceWord2D.setOnAction(e->{
+		choiceWord2D.setOnAction(e -> {
+
 			word2D.setPromptText(choiceWord2D.getValue().toString());
 		});
-		//sentenceD ist damit fertig
+		// sentenceD ist damit fertig
 		sentenceD = new Label("Ein neues Wort in das Woerterbuch eintragen: ");
-		//resultV ist die Meldung nach bestätigen beim Vokalbeltrainer
+		// resultV ist die Meldung nach bestätigen beim Vokalbeltrainer
 		resultV = new Label();
-		//wordV ist das Wort, welches man beim Trainer übersetzen muss. Es wird ein radom Wort generiert.
-		//Problem ist momentan, wenn man die ChoiceBox ändert, wird noch nicht automatisch das Wort in wordV geändert.
-		// Das sollte es aber, da sich ja die Sprache ändert und die ChoiceBoxen als Wert die Sprache geben.
+		// wordV ist das Wort, welches man beim Trainer übersetzen muss. Es wird ein
+		// radom Wort generiert.
+		// Problem ist momentan, wenn man die ChoiceBox ändert, wird noch nicht
+		// automatisch das Wort in wordV geändert.
+		// Das sollte es aber, da sich ja die Sprache ändert und die ChoiceBoxen als
+		// Wert die Sprache geben.
 		wordV = new Label();
 		wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 		wordV.setFont(new Font(30));
-		//languageDirectionV zeigt die Übersetzungsrichtung beim Trainer an. 
-		// Ändert man momentan eine ChoiceBox, wird aber noch nicht automatisch das dieses Label geändert. 
-		//Das muss noch verbessert werden
+		// languageDirectionV zeigt die Übersetzungsrichtung beim Trainer an.
+		// Ändert man momentan eine ChoiceBox, wird aber noch nicht automatisch das
+		// dieses Label geändert.
+		// Das muss noch verbessert werden
 		languageDirectionV = new Label();
-		languageDirectionV.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
-		//Counter Label
+		languageDirectionV
+				.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+		// Counter Label
 		counterLabel = new Label();
 		counterLabel.setText("Richtige Antworten: " + model.getCounter());
-		// Der ConfirmV button bestaetigt die Eingabe beim Trainer. Hier muss noch geprüft werden, ob das Wort
-		//ueberhaupt im Wörterbuch ist, sonst kommt ie NullPointerException :(
+		// Der ConfirmV button bestaetigt die Eingabe beim Trainer. Hier muss noch
+		// geprüft werden, ob das Wort
+		// ueberhaupt im Wörterbuch ist, sonst kommt ie NullPointerException :(
 		confirmV = new Button("Bestaetigen");
 		confirmV.setOnAction(e -> {
 			if (!textInputFieldV.getText().toString().isEmpty()) {
 				Word word = model.getWord1(textInputFieldV.getText());
 				Word word2 = model.getWord1(wordV.getText());
-				//Die Methode so veraendert, das sie für ArrayList funktioniert
+				// Die Methode so veraendert, das sie für ArrayList funktioniert
 				if (model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == true) {
 					resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
 					wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-					textInputFieldV.clear();;
-					//Logik fuer Counter
+					textInputFieldV.clear();
+					;
+					// Logik fuer Counter
 					model.counter(true);
 					counterLabel.setText("Richtige Antworten: " + model.getCounter());
 				}
 				if (model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == false) {
 					resultV.setText("Die Uebersetzung war falsch! Versuche es noch einmal!");
-					textInputFieldV.clear();;
-					//Logik fuer Counter
+					textInputFieldV.clear();
+					;
+					// Logik fuer Counter
 					model.counter(false);
 					counterLabel.setText("Richtige Antworten: " + model.getCounter());
 
@@ -147,114 +168,143 @@ public class VocabularyTrainerUI extends Application {
 			}
 
 		});
-		//Aendert die Uebersetzungsrichtung des Trainers
+		// Aendert die Uebersetzungsrichtung des Trainers
 		changeDirectionV = new Button("Uebersetzungsrichtung aendern");
 		changeDirectionV.setOnAction(e -> {
 			Language language = choiceWord1V.getValue();
 			choiceWord1V.setValue(choiceWord2V.getValue());
 			choiceWord2V.setValue(language);
-			
-			//Hier wurde nun die Anpassung getroffen, dass wenn sich das Wort aeandert
-			//ein neues Vokabelpaar initialisiert wird, somit funktioniert diese Methode nun.
-			//Die untere Zeile wurde einfach aus der init() kopiert.
+
+			// Hier wurde nun die Anpassung getroffen, dass wenn sich das Wort aeandert
+			// ein neues Vokabelpaar initialisiert wird, somit funktioniert diese Methode
+			// nun.
+			// Die untere Zeile wurde einfach aus der init() kopiert.
 			wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-			languageDirectionV.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
-			//Logik fuer Counter
+			languageDirectionV.setText(
+					"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+			// Logik fuer Counter
 			model.counter(false);
 			counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 
 		});
-		//Fuegt die Woerter in das Woertbuch ein. Hier sollen keine Duplikate entstehen. 
-		//Man kann aber mehrfach ein Wort eingeben, um Verbindungen für viele Sprachen herzustellen. 
-		//z.B: Hallo -> Hello, Hallo-> Bonjour, Hallo-> Ave. Hallo soll aber nur einmal gespeichert werden.
-		//Die Probleme der Methode sollte eigentlich ausgemerzt sein. Es wird noch manchmal eine Exception geworfen, aber das Programm funktioniert 
+		// Fuegt die Woerter in das Woertbuch ein. Hier sollen keine Duplikate
+		// entstehen.
+		// Man kann aber mehrfach ein Wort eingeben, um Verbindungen für viele Sprachen
+		// herzustellen.
+		// z.B: Hallo -> Hello, Hallo-> Bonjour, Hallo-> Ave. Hallo soll aber nur einmal
+		// gespeichert werden.
+		// Die Probleme der Methode sollte eigentlich ausgemerzt sein. Es wird noch
+		// manchmal eine Exception geworfen, aber das Programm funktioniert
 		addD = new Button("Hinzufuegen");
 		addD.setOnAction((ActionEvent e) -> {
-			    
-			 
-				String word1 = word1D.getText().toString();
-				String word2 = word2D.getText().toString();
-				//Neu dabei, da bei der addwortpair es nicht funktioniert hat, zu pruefen, ob eines der beiden Felder leer ist.
-				if(word1D.getText().isEmpty() || word2D.getText().isEmpty()) {
-					Alert alert = new Alert(AlertType.ERROR);
-					alert.setTitle("Wort hinzufuegen");
-					alert.setHeaderText("Fehler");
-					alert.setContentText("Bitte beide Felder eintragen");
-					alert.showAndWait();
-				}
-				else {
-				try {
-				model.addNewWordPair(word1, choiceWord1D.getValue(), word2,choiceWord2D.getValue());
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Wort hinzufuegen");
-				alert.setHeaderText("Erfolg");
-				alert.setContentText("Wort wurde erfolgreich hinzugefuegt");
-				alert.showAndWait();
-				
-			} catch (WordException e1) {
+
+			String word1 = word1D.getText().toString();
+			String word2 = word2D.getText().toString();
+			// Neu dabei, da bei der addwortpair es nicht funktioniert hat, zu pruefen, ob
+			// eines der beiden Felder leer ist.
+			if (word1D.getText().isEmpty() || word2D.getText().isEmpty()) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Wort hinzufuegen");
 				alert.setHeaderText("Fehler");
-				alert.setContentText("Eintrag fuer " + word1D.getText() + " bereits vorhanden");
+				alert.setContentText("Bitte beide Felder eintragen");
 				alert.showAndWait();
-			}
+			} else {
+				try {
+					model.addNewWordPair(word1, choiceWord1D.getValue(), word2, choiceWord2D.getValue());
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Wort hinzufuegen");
+					alert.setHeaderText("Erfolg");
+					alert.setContentText("Wort wurde erfolgreich hinzugefuegt");
+					alert.showAndWait();
+
+				} catch (WordException e1) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Wort hinzufuegen");
+					alert.setHeaderText("Fehler");
+					alert.setContentText("Eintrag fuer " + word1D.getText() + " bereits vorhanden");
+					alert.showAndWait();
 				}
-				word1D.clear();
-				word2D.clear();
-			    
-		});
-		//Das Woerterbuch kann hiermit persistent werden. Bis jetzt noch nicht behandelt.
-		persistanceD = new Button("Woerterbuch speichern");
-		persistanceD.setOnAction(e -> {
+			}
+			word1D.clear();
+			word2D.clear();
+			
 
 		});
-		//Label, um die Dictionary Woerter zu sehen.
-		showDictionaryD = new Label();
-		//Button der einem das Dictionary zeigt.
-		getDictionaryD = new Button("Woerterbuchlist");
-		getDictionaryD.setOnAction(e->{
-		showDictionaryD.setText(model.wordListToString()); 	
+		// Das Woerterbuch kann hiermit persistent werden. Bis jetzt noch nicht
+		// behandelt.
+		persistanceD = new Button("Woerterbuch speichern");
+		persistanceD.setOnAction(e -> {
+//			try {
+//				dao.updateModel(model);
+//			} catch (IOException ex) {
+//				showAlert("Can't write to File!");
+//				ex.printStackTrace();
+//			}
+		});
+		deleteD= new Button("Loesche Woerterbuch und HighScore!");
+		deleteD.setOnAction(e->{
+			
+			
 		});
 			
+		
+	
+		// Label, um die Dictionary Woerter zu sehen.
+		showDictionaryD = new Label();
+		// Button der einem das Dictionary zeigt.
+		getDictionaryD = new Button("Woerterbuchlist");
+		getDictionaryD.setOnAction(e -> {
+			showDictionaryD.setText(model.wordListToString());
+		});
+
+	}
+
+	private void showAlert(String message) {
+		Alert alert = new Alert(AlertType.ERROR, message);
+		alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> alert.close());
 	}
 
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Vokabeltrainer");
-		primaryStage.setScene(new Scene(createSceneGraph(), 700, 700));
+		primaryStage.setScene(new Scene(createSceneGraph(), 700, 200));
 		primaryStage.show();
 
 	}
-	//Der Scene Graph besteht aus einer TabPane mit zwei Tabs. Die Tabs enthalten eine VBox, welche selbst
-	//die einzelnen Elemente enthalten, manche in FlowPanes verpackt. Hier muss am Ende noch Design und Ordnung verbessert werden.
+
+	// Der Scene Graph besteht aus einer TabPane mit zwei Tabs. Die Tabs enthalten
+	// eine VBox, welche selbst
+	// die einzelnen Elemente enthalten, manche in FlowPanes verpackt. Hier muss am
+	// Ende noch Design und Ordnung verbessert werden.
 	private Parent createSceneGraph() {
 		TabPane pane = new TabPane();
 		VBox box1 = new VBox();
 		Tab tab1 = new Tab();
 		FlowPane flow1 = new FlowPane();
 		FlowPane flow2 = new FlowPane();
-		flow2.getChildren().addAll(textInputFieldV,confirmV);
+		flow2.getChildren().addAll(textInputFieldV, confirmV);
 		flow1.getChildren().addAll(choiceWord1V, choiceWord2V);
 		tab1.setText("Trainieren");
-     	box1.getChildren().addAll(translationSentenceV, wordV,languageDirectionV,flow1,flow2,changeDirectionV,resultV, counterLabel);
-     	box1.setAlignment(Pos.TOP_CENTER);
-     	tab1.setContent(box1);
+		box1.getChildren().addAll(translationSentenceV, wordV, languageDirectionV, flow1, flow2, changeDirectionV,
+				resultV, counterLabel);
+		box1.setAlignment(Pos.TOP_CENTER);
+		tab1.setContent(box1);
 		Tab tab2 = new Tab();
 		tab2.setText("Woerterbuch");
 		VBox box2 = new VBox();
 		FlowPane flow3 = new FlowPane();
 		FlowPane flow4 = new FlowPane();
 		flow3.getChildren().addAll(choiceWord1D, choiceWord2D);
-		flow4.getChildren().addAll(word1D,word2D,addD);
-		box2.getChildren().addAll(sentenceD,flow3, flow4, persistanceD, showDictionaryD, getDictionaryD );
+		flow4.getChildren().addAll(word1D, word2D, addD);
+		box2.getChildren().addAll(sentenceD, flow3, flow4, persistanceD, showDictionaryD, getDictionaryD);
 		box2.setAlignment(Pos.TOP_CENTER);
 		tab2.setContent(box2);
 		pane.getTabs().add(tab1);
 		pane.getTabs().add(tab2);
-		//Hier wird festgelegt, dass die Tabs nicht über ein x geschossen werden können.
+		// Hier wird festgelegt, dass die Tabs nicht über ein x geschossen werden
+		// können.
 		pane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-		
-		
-        return pane;
+
+		return pane;
 
 	}
 

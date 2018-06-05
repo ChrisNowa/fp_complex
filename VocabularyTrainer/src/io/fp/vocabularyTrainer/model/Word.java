@@ -1,18 +1,23 @@
 package io.fp.vocabularyTrainer.model;
 
+import java.io.Serializable; 
 import java.util.ArrayList;
 
-public class Word {
- //Klasse für die Wörter. Ist denke ich selbsterklärend.
+public class Word implements Serializable{
+ /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5828823486941127715L;
+//Klasse für die Wörter. Ist denke ich selbsterklärend.
 private String word;
 private ArrayList<Integer> orderNumbers;
 private Language language;
 
 
-public Word(String word, int oderNumber, Language language) {
+public Word(String word, Integer orderNumber, Language language) {
 	this.word = word;
 	orderNumbers = new ArrayList<>();
-	orderNumbers.add(oderNumber);
+	orderNumbers.add(orderNumber);
 	this.language = language;
 }
 

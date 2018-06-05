@@ -1,5 +1,6 @@
 package io.fp.vocabularyTrainer.model;
 
+import java.io.Serializable; 
 import java.util.ArrayList; 
 import java.util.Iterator;
 import java.util.Random;
@@ -8,11 +9,15 @@ import java.util.Random;
 // Lt. Exception in Zeile 106 bei der UI
 // import com.sun.org.apache.bcel.internal.generic.GOTO;
 //Bei mir kommt der Import nicht vor
-public class VocabularyModel {
+public class VocabularyModel implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3040038594094679081L;
 	private ArrayList<Word> wordList;
-	private int orderNumbers;
+	private Integer orderNumbers;
 	private Random random;
-	private int counter;
+	private Integer counter;
 
 	public VocabularyModel() {
 		wordList = new ArrayList<Word>();
@@ -20,7 +25,7 @@ public class VocabularyModel {
 		addForStart();
 		// Daher auch orderNumbers = 1, da addForStart
 		orderNumbers = 1;
-		random = new Random();
+	    random = new Random();
 		counter = 0;
 	}
 
@@ -80,7 +85,7 @@ public class VocabularyModel {
 
 	// Hat momentan keine bedeutung
 	public void deleteWordList() {
-		Iterator i = wordList.iterator();
+		Iterator<Word> i = wordList.iterator();
 		while (i.hasNext()) {
 			wordList.remove(i.next());
 		}
@@ -97,8 +102,8 @@ public class VocabularyModel {
 	// Es wird solange generiert, bis Word und language stimmen.
 	public Word getWordRandom(Language language) {
 		boolean rightLanguage = false;
-		int index = random.nextInt(wordList.size());
-		Word word = wordList.get(index);
+		int index =  random.nextInt(wordList.size());
+		Word word =  wordList.get(index);
 		while (rightLanguage == false) {
 			if (word.getLanguage().equals(language)) {
 				rightLanguage = true;
