@@ -215,6 +215,9 @@ public class VocabularyTrainerUI extends Application {
 				Word word2 = model.getWord1(wordV.getText());
 				// Die Methode so veraendert, das sie für ArrayList funktioniert
 				if (!model.getWordList().contains(model.getWord1(textInputFieldV.getText()))) {
+					model.counter(false);
+					counterLabel.setText("Richtige Antworten: " + model.getCounter());
+					resultV.setText("Die Uebersetzung war falsch! Versuch es noch einmal.");
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Wort nicht enthalten");
 					alert.setHeaderText("Fehler");
@@ -234,7 +237,7 @@ public class VocabularyTrainerUI extends Application {
 					}
 					if ((model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == false)
 							|| (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == false)) {
-						resultV.setText("Die Uebersetzung war falsch! Versuche es noch einmal!");
+						resultV.setText("Die Uebersetzung war falsch! Versuche es noch einmal.");
 						textInputFieldV.clear();
 						;
 						// Logik fuer Counter
@@ -345,7 +348,7 @@ public class VocabularyTrainerUI extends Application {
 
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Vokabeltrainer");
-		primaryStage.setScene(new Scene(createSceneGraph(), 700, 200));
+		primaryStage.setScene(new Scene(createSceneGraph(), 700, 300));
 		primaryStage.show();
 
 	}
