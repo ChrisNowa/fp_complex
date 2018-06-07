@@ -9,6 +9,7 @@ import io.fp.vocabularyTrainer.model.Language;
 import io.fp.vocabularyTrainer.model.VocabularyModel;
 import io.fp.vocabularyTrainer.model.Word;
 import io.fp.vocabularyTrainer.model.WordException;
+import io.fp.vocabularyTrainer.model.Highscore;
 import javafx.application.Application;
 import javafx.application.Application.Parameters;
 import javafx.collections.FXCollections;
@@ -54,6 +55,8 @@ public class VocabularyTrainerUI extends Application {
 	private ChoiceBox<Language> choiceWord2V;
 	private ChoiceBox<Language> choiceWord1D;
 	private ChoiceBox<Language> choiceWord2D;
+	private Label highscores;
+	private Highscore highscore;
 	// hier wird das dao als Datenfeld genannt.
 	private VocabularyTrainerDAO dao;
 
@@ -75,6 +78,7 @@ public class VocabularyTrainerUI extends Application {
 
 		// init rest
 		model = new VocabularyModel();
+		highscore = new Highscore();
 		translationSentenceV = new Label("Uebersetze das Wort");
 		textInputFieldV = new TextField();
 		textInputFieldV.setPromptText("Uebersetzung");
@@ -272,6 +276,11 @@ public class VocabularyTrainerUI extends Application {
 		getDictionaryD.setOnAction(e -> {
 			showDictionaryD.setText(model.wordListToString());
 		});
+		
+		highscores = new Label();
+		//Test
+		highscore.setScore(5, "Chris");
+		highscores.setText(highscore.toString());
 
 	}
 
@@ -309,6 +318,11 @@ public class VocabularyTrainerUI extends Application {
 		VBox box2 = new VBox();
 		FlowPane flow3 = new FlowPane();
 		FlowPane flow4 = new FlowPane();
+		Tab tab3 = new Tab();
+		tab3.setText("Highscores");
+		VBox box3 = new VBox();
+		tab3.setContent(box3);
+		box3.getChildren().addAll(highscores);
 		flow3.getChildren().addAll(choiceWord1D, choiceWord2D);
 		flow4.getChildren().addAll(word1D, word2D, addD);
 		box2.getChildren().addAll(sentenceD, flow3, flow4, persistanceD, showDictionaryD, getDictionaryD);
@@ -316,6 +330,7 @@ public class VocabularyTrainerUI extends Application {
 		tab2.setContent(box2);
 		pane.getTabs().add(tab1);
 		pane.getTabs().add(tab2);
+		pane.getTabs().add(tab3);
 		// Hier wird festgelegt, dass die Tabs nicht über ein x geschossen werden
 		// können.
 		pane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
