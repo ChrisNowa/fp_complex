@@ -1,6 +1,8 @@
 package io.fp.vocabularyTrainer.ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.fp.vocabularyTrainer.dao.VocabularyTrainerDAO;
@@ -107,11 +109,30 @@ public class VocabularyTrainerUI extends Application {
 		word2D = new TextField();
 		word2D.setPromptText(choiceWord2D.getValue().toString());
 		word2D.setPrefColumnCount(20);
+		choiceWord1D.setOnMouseClicked(e -> {
+			ArrayList<Language> values = new ArrayList<>();	
+			values.addAll(Arrays.asList(Language.values()));
+			values.remove(choiceWord2D.getValue());
+			for(int i = 0; i< values.size();i++)
+			if(!choiceWord1D.getItems().contains(values.get(i)))
+			choiceWord1D.getItems().add(values.get(i));
+		});
 		choiceWord1D.setOnAction(e -> {
+			
+
 			word1D.setPromptText(choiceWord1D.getValue().toString());
 
 		});
+		choiceWord2D.setOnMouseClicked(e -> {
+			ArrayList<Language> values = new ArrayList<>();	
+			values.addAll(Arrays.asList(Language.values()));
+			values.remove(choiceWord1D.getValue());
+			for(int i = 0; i< values.size();i++)
+			if(!choiceWord2D.getItems().contains(values.get(i)))
+			choiceWord2D.getItems().add(values.get(i));
+		});
 		choiceWord2D.setOnAction(e -> {
+			
 
 			word2D.setPromptText(choiceWord2D.getValue().toString());
 		});
@@ -166,7 +187,8 @@ public class VocabularyTrainerUI extends Application {
 					alert.showAndWait();
 
 				} else {
-					if ((model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == true) && (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == true)) {
+					if ((model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == true)
+							&& (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == true)) {
 						resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
 						wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 						textInputFieldV.clear();
@@ -175,7 +197,8 @@ public class VocabularyTrainerUI extends Application {
 						model.counter(true);
 						counterLabel.setText("Richtige Antworten: " + model.getCounter());
 					}
-					if((model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == false) || (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == false)) {
+					if ((model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == false)
+							|| (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == false)) {
 						resultV.setText("Die Uebersetzung war falsch! Versuche es noch einmal!");
 						textInputFieldV.clear();
 						;

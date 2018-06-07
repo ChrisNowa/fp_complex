@@ -115,6 +115,8 @@ public class VocabularyModel implements Serializable{
 
 		return word;
 	}
+	
+	
 
 	// Hier wird ein Wort zurueckgegeben, Ueber den Wort Namen
 	public Word getWord1(String wordName) {
@@ -146,6 +148,7 @@ public class VocabularyModel implements Serializable{
 			compare = true;
 		}
 		return compare; 
+		
 	}
 	
 
