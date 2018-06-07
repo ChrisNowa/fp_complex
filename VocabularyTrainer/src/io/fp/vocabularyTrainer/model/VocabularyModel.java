@@ -62,13 +62,18 @@ public class VocabularyModel implements Serializable {
 				}
 			} else {
 				if (word.getWord().equals(word1.getWord())) {
-					word1.getOrderNumbers().add((orderNumber));
+					word.getOrderNumbers().add((orderNumber));
+					wordList.remove(getWord1(word.getWord()));
+					wordList.add(word);
 					wordList.add(word2);
+				
 					
 				} else if (word.getWord().equals(word2.getWord())) {
-					word2.getOrderNumbers().add((orderNumber));
+					word.getOrderNumbers().add((orderNumber));
+					wordList.remove(getWord1(word.getWord()));
+					wordList.add(word);
 					wordList.add(word1);
-					
+				
 				}
 				
 			}
@@ -81,9 +86,11 @@ public class VocabularyModel implements Serializable {
 			if (alternativeWordList.equals(alternativeWordList2)) {
 				wordList.add(word1);
 				wordList.add(word2);
-				orderNumber++;
+				
 			}
+			
 		}
+		orderNumber++;
 	}
 
 	// Hat momentan keine bedeutung
@@ -126,9 +133,6 @@ public class VocabularyModel implements Serializable {
 				if (word.getLanguage().equals(language)) {
 					rightLanguage = true;
 
-				} else {
-					index = random.nextInt(wordList.size());
-					word = wordList.get(index);
 				}
 			}
 		}
