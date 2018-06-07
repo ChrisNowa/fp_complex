@@ -330,7 +330,7 @@ public class VocabularyTrainerUI extends Application {
 		//Test
 		highscore.setScore(5, "Chris");
 		highscore.setScore(7, "Harald");
-		highscores.setText(highscore.highScoreToStringtig());
+		highscores.setText(highscore.highScoreToString());
 
 	}
 // Fuer DAO 

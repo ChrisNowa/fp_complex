@@ -16,7 +16,7 @@ public class Highscore {
 		//falls eine Liste schon existiert, darf es ja nicht ueberschrieben werden.
 	}
 	
-	public String highScoreToStringtig() {
+	public String highScoreToString() {
 		int i = 1;
 		ArrayList<String> highScoreList = new ArrayList<>();
 		
@@ -25,6 +25,13 @@ public class Highscore {
 				    highScoreList.add(i + ". Platz: " + entry.getKey() + " richtige in Folge von " + entry.getValue() + "\n");
 				    i++;
 				}
+		
+//		for(Integer key : scores.keySet()) {
+//			highScoreList.add(i + ". Platz: " + key.getKey() + " richtige in Folge von " + key.getValue() + "\n");
+//		    i++;
+//		}
+		
+		
 		return highScoreList.toString();
 		
 	}

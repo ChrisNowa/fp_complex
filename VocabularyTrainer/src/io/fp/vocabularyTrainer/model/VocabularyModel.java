@@ -162,7 +162,20 @@ public class VocabularyModel implements Serializable {
 		wordList.add(new Word("Hello", 0, Language.ENGLISH));
 		wordList.add(new Word("Ave", 0, Language.LATIN));
 		wordList.add(new Word("Bonjour", 0, Language.FRENCH));
-
+		wordList.add(new Word("Haus", 1, Language.GERMAN));
+		wordList.add(new Word("House", 1, Language.ENGLISH));
+		wordList.add(new Word("Domum", 1, Language.LATIN));
+		wordList.add(new Word("Maison", 1, Language.FRENCH));
+		wordList.add(new Word("Bruder", 2, Language.GERMAN));
+		wordList.add(new Word("Brother", 2, Language.ENGLISH));
+		wordList.add(new Word("Fratris", 2, Language.LATIN));
+		wordList.add(new Word("Frere", 2, Language.FRENCH));
+		wordList.add(new Word("Stadt", 3, Language.GERMAN));
+		wordList.add(new Word("City", 3, Language.ENGLISH));
+		wordList.add(new Word("Civitas", 3, Language.LATIN));
+		wordList.add(new Word("Ville", 3, Language.FRENCH));
+		
+		
 	}
 
 	// Gibt die WortListe als String Liste wieder. Macht sie damit lesbar.

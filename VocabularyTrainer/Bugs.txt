@@ -1,8 +1,10 @@
 Fehler Vokabeltrainer:
-1. Waehlt man eine ChoiceBox aus(Bsp.:Latin), so kann in der anderen auch Latin ausgewaehlt werden.
-
-7. Delete Button für das Löschen des Wörterbuchs eingeben.
-
+1.Delete Button für das Löschen des Wörterbuchs eingeben.
+2. Random funktioniert im Moment nicht.
+3. Highscore toString sortiert nicht.
+4. Highscore muss erfasst werden, wenn ein Spieler ausscheidet, muss geprueft werden,
+	ob dieser H�her als der kleinste HighScore ist, falls das der FAll ist, muss er der Map
+	hinzugefuegt werden.
 Fehler Woerterbuch:
 1. Das Woerterbuch muss noch persistent werden.
 
