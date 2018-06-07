@@ -195,6 +195,7 @@ public class VocabularyTrainerUI extends Application {
 		// radom Wort generiert.
 		wordV = new Label();
 		wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
+		model.setPrevWord(model.getWord1(wordV.getText()));
 		wordV.setFont(new Font(30));
 		// languageDirectionV zeigt die Übersetzungsrichtung beim Trainer an.
 		languageDirectionV = new Label();
@@ -227,7 +228,7 @@ public class VocabularyTrainerUI extends Application {
 							&& (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == true)) {
 						resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
 						wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-				       
+				       model.setPrevWord(model.getWord1(wordV.getText()));
 						textInputFieldV.clear();
 						;
 						// Logik fuer Counter

@@ -22,9 +22,8 @@ public class VocabularyModel implements Serializable {
 	private Language rememberV2;
 	private Language rememberD1;
 	private Language rememberD2;
-   
-	
-	
+	private Word prevWord;
+
 	public VocabularyModel() {
 		wordList = new ArrayList<Word>();
 		// Add for Start fügt schonmal einen Woertersatz hinzu. Siehe Methode
@@ -33,6 +32,7 @@ public class VocabularyModel implements Serializable {
 		orderNumbers = 1;
 		random = new Random();
 		counter = 0;
+		prevWord = null;
 	}
 
 	public void addNewWordPair(String l1Word, Language l1, String l2Word, Language l2) throws WordException {
@@ -105,16 +105,33 @@ public class VocabularyModel implements Serializable {
 	// Random Generator. Stellt über While Schleife sicher, dass das Wort nur von
 	// der eingegeben Language ist.
 	// Es wird solange generiert, bis Word und language stimmen.
-	public Word getWordRandom(Language language ) {
+	public Word getWordRandom(Language language) {
 		boolean rightLanguage = false;
+		boolean notPrevWord = false;
 		int index = random.nextInt(wordList.size());
 		Word word = wordList.get(index);
-		while (rightLanguage == false) {
-			if (word.getLanguage().equals(language)) {
-				rightLanguage = true;
-			} else {
-				index = random.nextInt(wordList.size());
-				word = wordList.get(index);
+		if (prevWord != null) {
+			while ((rightLanguage == false) && (notPrevWord == false)) {
+				if ((word.getLanguage().equals(language)) && (!prevWord.equals(word))) {
+					rightLanguage = true;
+					notPrevWord = true;
+
+				} else {
+					index = random.nextInt(wordList.size());
+					word = wordList.get(index);
+				}
+			}
+		}
+
+		else {
+			while ((rightLanguage == false)) {
+				if (word.getLanguage().equals(language)) {
+					rightLanguage = true;
+
+				} else {
+					index = random.nextInt(wordList.size());
+					word = wordList.get(index);
+				}
 			}
 		}
 
@@ -174,8 +191,7 @@ public class VocabularyModel implements Serializable {
 		wordList.add(new Word("City", 3, Language.ENGLISH));
 		wordList.add(new Word("Civitas", 3, Language.LATIN));
 		wordList.add(new Word("Ville", 3, Language.FRENCH));
-		
-		
+
 	}
 
 	// Gibt die WortListe als String Liste wieder. Macht sie damit lesbar.
@@ -236,5 +252,12 @@ public class VocabularyModel implements Serializable {
 		this.rememberD2 = rememberD2;
 	}
 
-	
+	public Word getPrevWord() {
+		return prevWord;
+	}
+
+	public void setPrevWord(Word prevWord) {
+		this.prevWord = prevWord;
+	}
+
 }
