@@ -113,40 +113,71 @@ public class VocabularyTrainerUI extends Application {
 		word2D = new TextField();
 		word2D.setPromptText(choiceWord2D.getValue().toString());
 		word2D.setPrefColumnCount(20);
-		choiceWord1D.setOnMouseClicked(e -> {
-			ArrayList<Language> values = new ArrayList<>();	
-			values.addAll(Arrays.asList(Language.values()));
-			values.remove(choiceWord2D.getValue());
-			for(int i = 0; i< values.size();i++)
-			if(!choiceWord1D.getItems().contains(values.get(i)))
-			choiceWord1D.getItems().add(values.get(i));
+		
+		choiceWord1D.setOnMouseClicked(e->{
+			model.setRememberD1(choiceWord1D.getValue());
 		});
+		
 		choiceWord1D.setOnAction(e -> {
+			Language value = model.getRememberD1();
 			
+			if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
+				choiceWord1D.setValue(choiceWord2D.getValue());
+				choiceWord2D.setValue(value);
+				
+			}
 
 			word1D.setPromptText(choiceWord1D.getValue().toString());
 
 		});
-		choiceWord2D.setOnMouseClicked(e -> {
-			ArrayList<Language> values = new ArrayList<>();	
-			values.addAll(Arrays.asList(Language.values()));
-			values.remove(choiceWord1D.getValue());
-			for(int i = 0; i< values.size();i++)
-			if(!choiceWord2D.getItems().contains(values.get(i)))
-			choiceWord2D.getItems().add(values.get(i));
+		choiceWord2D.setOnMouseClicked(e->{
+			model.setRememberD2(choiceWord2D.getValue());
 		});
+		
+		
 		choiceWord2D.setOnAction(e -> {
+             Language value = model.getRememberD2();
 			
-
+			if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
+				choiceWord2D.setValue(choiceWord1D.getValue());
+				choiceWord1D.setValue(value);
+			}
 			word2D.setPromptText(choiceWord2D.getValue().toString());
 		});
+		
+		choiceWord1V.setOnMouseClicked(e->{
+			model.setRememberV1(choiceWord1V.getValue());
+		});
+		
 		choiceWord1V.setOnAction(e -> {
+            Language value = model.getRememberV1();
+			
+			if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
+				choiceWord1V.setValue(choiceWord2V.getValue());
+				choiceWord2V.setValue(value);
+				
+			}
+			
+			
 			wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 			languageDirectionV.setText(
 					"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
 		});
 
+		choiceWord2V.setOnMouseClicked(e->{
+		model.setRememberV2(choiceWord2V.getValue());
+			
+		});
+		
 		choiceWord2V.setOnAction(e -> {
+          Language value = model.getRememberV2();
+			
+			if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
+				choiceWord2V.setValue(choiceWord1V.getValue());
+				choiceWord1V.setValue(value);
+			}
+			
+			
 			languageDirectionV.setText(
 					"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
 

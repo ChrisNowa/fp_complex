@@ -1,7 +1,7 @@
 package io.fp.vocabularyTrainer.model;
 
-import java.io.Serializable; 
-import java.util.ArrayList; 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -9,7 +9,7 @@ import java.util.Random;
 // Lt. Exception in Zeile 106 bei der UI
 // import com.sun.org.apache.bcel.internal.generic.GOTO;
 //Bei mir kommt der Import nicht vor
-public class VocabularyModel implements Serializable{
+public class VocabularyModel implements Serializable {
 	/**
 	 * 
 	 */
@@ -18,6 +18,10 @@ public class VocabularyModel implements Serializable{
 	private Integer orderNumbers;
 	private Random random;
 	private Integer counter;
+	private Language rememberV1;
+	private Language rememberV2;
+	private Language rememberD1;
+	private Language rememberD2;
 
 	public VocabularyModel() {
 		wordList = new ArrayList<Word>();
@@ -25,7 +29,7 @@ public class VocabularyModel implements Serializable{
 		addForStart();
 		// Daher auch orderNumbers = 1, da addForStart
 		orderNumbers = 1;
-	    random = new Random();
+		random = new Random();
 		counter = 0;
 	}
 
@@ -36,35 +40,36 @@ public class VocabularyModel implements Serializable{
 		// WortListe waehrend des Lesens
 		// erweitert wird(durch add), um eine Exception zu vermeiden. Bei einem
 		// Sonderfall schmeißt es momentan dennoch diese
-		// Exception, das Programm funktioniert aber einwandfrei. Nun mit der Methode addAll behandelt.
+		// Exception, das Programm funktioniert aber einwandfrei. Nun mit der Methode
+		// addAll behandelt.
 		ArrayList<Word> alternativeWordList = new ArrayList<>();
 		alternativeWordList.addAll(wordList);
 		ArrayList<Word> alternativeWordList2 = new ArrayList<>();
 		// Hier verhindere ich, dass zweimal das selbe Wort eingegeben wird.
-		
+
 		if (l1Word.equals(l2Word)) {
 			throw new WordException("Das Wort ist bereits vorhanden");
 
 		}
-	
+
 		for (Word word : alternativeWordList) {
-		
-		if(word.getWord().equals(word1.getWord())){
-			for(Word wort: alternativeWordList) {
-				if(wort.getWord().equals(word2.getWord())) {
-					throw new WordException("Beide Woerter bereits enthalten");
+
+			if (word.getWord().equals(word1.getWord())) {
+				for (Word wort : alternativeWordList) {
+					if (wort.getWord().equals(word2.getWord())) {
+						throw new WordException("Beide Woerter bereits enthalten");
+					}
 				}
 			}
-		}
-			
-		if (word.getWord().equals(word1.getWord())) {
+
+			if (word.getWord().equals(word1.getWord())) {
 				word1.getOrderNumbers().add((orderNumbers));
 				wordList.add(word2);
-				orderNumbers ++;
+				orderNumbers++;
 			} else if (word.getWord().equals(word2.getWord())) {
 				word2.getOrderNumbers().add((orderNumbers));
 				wordList.add(word1);
-               orderNumbers++;
+				orderNumbers++;
 			}
 		}
 		// Hier wird die nun aktualisierte WordList der zweiten alternativenListe
@@ -80,8 +85,6 @@ public class VocabularyModel implements Serializable{
 		}
 
 	}
-
-	
 
 	// Hat momentan keine bedeutung
 	public void deleteWordList() {
@@ -102,8 +105,8 @@ public class VocabularyModel implements Serializable{
 	// Es wird solange generiert, bis Word und language stimmen.
 	public Word getWordRandom(Language language) {
 		boolean rightLanguage = false;
-		int index =  random.nextInt(wordList.size());
-		Word word =  wordList.get(index);
+		int index = random.nextInt(wordList.size());
+		Word word = wordList.get(index);
 		while (rightLanguage == false) {
 			if (word.getLanguage().equals(language)) {
 				rightLanguage = true;
@@ -115,8 +118,6 @@ public class VocabularyModel implements Serializable{
 
 		return word;
 	}
-	
-	
 
 	// Hier wird ein Wort zurueckgegeben, Ueber den Wort Namen
 	public Word getWord1(String wordName) {
@@ -130,8 +131,10 @@ public class VocabularyModel implements Serializable{
 		return word;
 	}
 
-	// Vergleicht OrderNumbers. Jetzt sind es zwei ArrayListen. Man schaut die Nummern der ersten Liste einzeln an und überprueft,
-	// ob die zweite ArrayListe eine dieser Nummern enthaelt.Tut sie dass, so ist die Ueberprüfung richtig.
+	// Vergleicht OrderNumbers. Jetzt sind es zwei ArrayListen. Man schaut die
+	// Nummern der ersten Liste einzeln an und überprueft,
+	// ob die zweite ArrayListe eine dieser Nummern enthaelt.Tut sie dass, so ist
+	// die Ueberprüfung richtig.
 	public boolean compareOrderNumbers(ArrayList<Integer> arrayList, ArrayList<Integer> arrayList2) {
 		boolean compare = false;
 		for (int number : arrayList) {
@@ -141,16 +144,15 @@ public class VocabularyModel implements Serializable{
 		}
 		return compare;
 	}
-	
-	public boolean compareLanguage(Language l1, Language l2 ) {
+
+	public boolean compareLanguage(Language l1, Language l2) {
 		boolean compare = false;
-		if(l1.equals(l2)) {
+		if (l1.equals(l2)) {
 			compare = true;
 		}
-		return compare; 
-		
+		return compare;
+
 	}
-	
 
 	// Bereits oben beschrieben
 	private void addForStart() {
@@ -185,6 +187,38 @@ public class VocabularyModel implements Serializable{
 
 	public String getCounter() {
 		return "" + counter;
+	}
+
+	public Language getRememberV1() {
+		return rememberV1;
+	}
+
+	public Language getRememberV2() {
+		return rememberV2;
+	}
+
+	public Language getRememberD1() {
+		return rememberD1;
+	}
+
+	public Language getRememberD2() {
+		return rememberD2;
+	}
+
+	public void setRememberV1(Language rememberV1) {
+		this.rememberV1 = rememberV1;
+	}
+
+	public void setRememberV2(Language rememberV2) {
+		this.rememberV2 = rememberV2;
+	}
+
+	public void setRememberD1(Language rememberD1) {
+		this.rememberD1 = rememberD1;
+	}
+
+	public void setRememberD2(Language rememberD2) {
+		this.rememberD2 = rememberD2;
 	}
 
 }
