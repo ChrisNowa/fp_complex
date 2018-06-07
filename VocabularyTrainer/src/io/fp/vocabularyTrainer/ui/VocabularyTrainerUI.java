@@ -119,8 +119,7 @@ public class VocabularyTrainerUI extends Application {
 			if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
 				choiceWord1D.setValue(choiceWord2D.getValue());
 				choiceWord2D.setValue(value);
-				model.counter(false);
-				counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
+				
 			}
 
 			word1D.setPromptText(choiceWord1D.getValue().toString());
@@ -137,8 +136,7 @@ public class VocabularyTrainerUI extends Application {
 			if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
 				choiceWord2D.setValue(choiceWord1D.getValue());
 				choiceWord1D.setValue(value);
-				model.counter(false);
-				counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
+				
 			}
 			word2D.setPromptText(choiceWord2D.getValue().toString());
 		});
@@ -154,8 +152,6 @@ public class VocabularyTrainerUI extends Application {
 			if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
 				choiceWord1V.setValue(choiceWord2V.getValue());
 				choiceWord2V.setValue(value);
-				model.counter(false);
-				counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 				
 			}
 			
@@ -178,8 +174,7 @@ public class VocabularyTrainerUI extends Application {
 			if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
 				choiceWord2V.setValue(choiceWord1V.getValue());
 				choiceWord1V.setValue(value);
-				model.counter(false);
-				counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
+				
 			}
 			
 			
@@ -326,7 +321,7 @@ public class VocabularyTrainerUI extends Application {
 		highscores = new Label();
 		//Test
 		highscore.setScore(5, "Chris");
-		highscores.setText(highscore.toString());
+		highscores.setText(highscore.highScoreToStringtig());
 
 	}
 // Fuer DAO 
