@@ -89,11 +89,6 @@ public class VocabularyTrainerUI extends Application {
 		// die mit D vom Woerterbuch
 		// Am Anfang bekommen sie Deutsch und Englisch zugewiesen, um NullPointer bei
 		// den Labels zu vermeiden.
-		// Man muss noch schauen, dass beim aendern der ChoiceBoxen ist labels und
-		// TextFelder veraendert werden.
-		// Diese waeren meiner Meinung nach der PromptText von word1D und word2D, sowie
-		// der Text von
-		// languageDirectionV und das Wort von wordV
 		choiceWord1V = new ChoiceBox<>();
 		choiceWord1V.setItems(FXCollections.observableArrayList(Language.values()));
 		choiceWord1V.setValue(Language.GERMAN);
@@ -113,7 +108,7 @@ public class VocabularyTrainerUI extends Application {
 		word2D = new TextField();
 		word2D.setPromptText(choiceWord2D.getValue().toString());
 		word2D.setPrefColumnCount(20);
-		
+		//So merkt man sich den vorherigen Wert der ChoiceBox. Für Logik, wenn zweimal das Gleiche gewaehlt, wichtig.
 		choiceWord1D.setOnMouseClicked(e->{
 			model.setRememberD1(choiceWord1D.getValue());
 		});
@@ -124,7 +119,8 @@ public class VocabularyTrainerUI extends Application {
 			if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
 				choiceWord1D.setValue(choiceWord2D.getValue());
 				choiceWord2D.setValue(value);
-				
+				model.counter(false);
+				counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 			}
 
 			word1D.setPromptText(choiceWord1D.getValue().toString());
@@ -141,6 +137,8 @@ public class VocabularyTrainerUI extends Application {
 			if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
 				choiceWord2D.setValue(choiceWord1D.getValue());
 				choiceWord1D.setValue(value);
+				model.counter(false);
+				counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 			}
 			word2D.setPromptText(choiceWord2D.getValue().toString());
 		});
@@ -150,37 +148,44 @@ public class VocabularyTrainerUI extends Application {
 		});
 		
 		choiceWord1V.setOnAction(e -> {
-            Language value = model.getRememberV1();
+          
+			Language value = model.getRememberV1();
 			
 			if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
 				choiceWord1V.setValue(choiceWord2V.getValue());
 				choiceWord2V.setValue(value);
-				
+				model.counter(false);
+				counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 			}
 			
 			
 			wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 			languageDirectionV.setText(
 					"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
-		});
+           
+           });
 
 		choiceWord2V.setOnMouseClicked(e->{
 		model.setRememberV2(choiceWord2V.getValue());
-			
+		model.counter(false);
+		counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 		});
 		
 		choiceWord2V.setOnAction(e -> {
-          Language value = model.getRememberV2();
+         
+			Language value = model.getRememberV2();
 			
 			if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
 				choiceWord2V.setValue(choiceWord1V.getValue());
 				choiceWord1V.setValue(value);
+				model.counter(false);
+				counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 			}
 			
 			
 			languageDirectionV.setText(
 					"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
-
+          
 		});
 		// sentenceD ist damit fertig
 		sentenceD = new Label("Ein neues Wort in das Woerterbuch eintragen: ");
@@ -188,32 +193,23 @@ public class VocabularyTrainerUI extends Application {
 		resultV = new Label();
 		// wordV ist das Wort, welches man beim Trainer übersetzen muss. Es wird ein
 		// radom Wort generiert.
-		// Problem ist momentan, wenn man die ChoiceBox ändert, wird noch nicht
-		// automatisch das Wort in wordV geändert.
-		// Das sollte es aber, da sich ja die Sprache ändert und die ChoiceBoxen als
-		// Wert die Sprache geben.
 		wordV = new Label();
 		wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 		wordV.setFont(new Font(30));
 		// languageDirectionV zeigt die Übersetzungsrichtung beim Trainer an.
-		// Ändert man momentan eine ChoiceBox, wird aber noch nicht automatisch das
-		// dieses Label geändert.
-		// Das muss noch verbessert werden
 		languageDirectionV = new Label();
 		languageDirectionV
 				.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
 		// Counter Label
 		counterLabel = new Label();
 		counterLabel.setText("Richtige Antworten: " + model.getCounter());
-		// Der ConfirmV button bestaetigt die Eingabe beim Trainer. Hier muss noch
-		// geprüft werden, ob das Wort
-		// ueberhaupt im Wörterbuch ist, sonst kommt ie NullPointerException :(
+		// Der ConfirmV button bestaetigt die Eingabe beim Trainer. 
 		confirmV = new Button("Bestaetigen");
 		confirmV.setOnAction(e -> {
 			if (!textInputFieldV.getText().toString().isEmpty()) {
 				Word word = model.getWord1(textInputFieldV.getText());
 				Word word2 = model.getWord1(wordV.getText());
-				// Die Methode so veraendert, das sie für ArrayList funktioniert
+				//Wenn Wort nicht im Woerterbuch enthalten ist.
 				if (!model.getWordList().contains(model.getWord1(textInputFieldV.getText()))) {
 					model.counter(false);
 					counterLabel.setText("Richtige Antworten: " + model.getCounter());
@@ -223,12 +219,15 @@ public class VocabularyTrainerUI extends Application {
 					alert.setHeaderText("Fehler");
 					alert.setContentText("Dieses Wort ist nicht im Woerterbuch enthalten");
 					alert.showAndWait();
-
-				} else {
+                    textInputFieldV.clear();
+				} 
+				//Wenn Wort im Woerterbuch enthalten ist.
+				else {
 					if ((model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == true)
 							&& (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == true)) {
 						resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
 						wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
+				       
 						textInputFieldV.clear();
 						;
 						// Logik fuer Counter
@@ -249,12 +248,13 @@ public class VocabularyTrainerUI extends Application {
 			}
 
 		});
-		// Aendert die Uebersetzungsrichtung des Trainers
+		// Aendert die Uebersetzungsrichtung des Trainers.
 		changeDirectionV = new Button("Uebersetzungsrichtung aendern");
 		changeDirectionV.setOnAction(e -> {
-			Language language = choiceWord1V.getValue();
-			choiceWord1V.setValue(choiceWord2V.getValue());
-			choiceWord2V.setValue(language);
+			model.setRememberV1(choiceWord1V.getValue());
+			model.setRememberV2(choiceWord2V.getValue());
+			choiceWord1V.setValue(model.getRememberV2());
+			choiceWord2V.setValue(model.getRememberV1());
 
 			// Hier wurde nun die Anpassung getroffen, dass wenn sich das Wort aeandert
 			// ein neues Vokabelpaar initialisiert wird, somit funktioniert diese Methode
@@ -270,19 +270,12 @@ public class VocabularyTrainerUI extends Application {
 		});
 		// Fuegt die Woerter in das Woertbuch ein. Hier sollen keine Duplikate
 		// entstehen.
-		// Man kann aber mehrfach ein Wort eingeben, um Verbindungen für viele Sprachen
-		// herzustellen.
-		// z.B: Hallo -> Hello, Hallo-> Bonjour, Hallo-> Ave. Hallo soll aber nur einmal
-		// gespeichert werden.
-		// Die Probleme der Methode sollte eigentlich ausgemerzt sein. Es wird noch
-		// manchmal eine Exception geworfen, aber das Programm funktioniert
 		addD = new Button("Hinzufuegen");
 		addD.setOnAction((ActionEvent e) -> {
 
 			String word1 = word1D.getText().toString();
 			String word2 = word2D.getText().toString();
-			// Neu dabei, da bei der addwortpair es nicht funktioniert hat, zu pruefen, ob
-			// eines der beiden Felder leer ist.
+			// Prueft, ob eines der beiden Felder leer ist.
 			if (word1D.getText().isEmpty() || word2D.getText().isEmpty()) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Wort hinzufuegen");
@@ -310,8 +303,7 @@ public class VocabularyTrainerUI extends Application {
 			word2D.clear();
 
 		});
-		// Das Woerterbuch kann hiermit persistent werden. Bis jetzt noch nicht
-		// behandelt.
+		// Das Woerterbuch kann hiermit persistent werden. 
 		persistanceD = new Button("Woerterbuch speichern");
 		persistanceD.setOnAction(e -> {
 			// try {
@@ -341,7 +333,7 @@ public class VocabularyTrainerUI extends Application {
 		highscores.setText(highscore.highScoreToStringtig());
 
 	}
-
+// Fuer DAO 
 	private void showAlert(String message) {
 		Alert alert = new Alert(AlertType.ERROR, message);
 		alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> alert.close());
