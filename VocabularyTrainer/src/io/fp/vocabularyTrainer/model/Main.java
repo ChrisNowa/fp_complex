@@ -26,6 +26,7 @@ public class Main {
         System.out.println(model.getWord1("Umsonst").getOrderNumbers());
       
         System.out.println(model.getWord1("Klar").getLanguage());
+        System.out.println(model.wordListToString());
 	}
 
 }
