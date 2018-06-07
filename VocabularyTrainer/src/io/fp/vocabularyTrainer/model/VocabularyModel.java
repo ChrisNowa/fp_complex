@@ -22,7 +22,9 @@ public class VocabularyModel implements Serializable {
 	private Language rememberV2;
 	private Language rememberD1;
 	private Language rememberD2;
-
+   
+	
+	
 	public VocabularyModel() {
 		wordList = new ArrayList<Word>();
 		// Add for Start fügt schonmal einen Woertersatz hinzu. Siehe Methode
@@ -103,7 +105,7 @@ public class VocabularyModel implements Serializable {
 	// Random Generator. Stellt über While Schleife sicher, dass das Wort nur von
 	// der eingegeben Language ist.
 	// Es wird solange generiert, bis Word und language stimmen.
-	public Word getWordRandom(Language language) {
+	public Word getWordRandom(Language language ) {
 		boolean rightLanguage = false;
 		int index = random.nextInt(wordList.size());
 		Word word = wordList.get(index);
@@ -221,4 +223,5 @@ public class VocabularyModel implements Serializable {
 		this.rememberD2 = rememberD2;
 	}
 
+	
 }
