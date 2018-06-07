@@ -170,9 +170,9 @@ public class VocabularyModel implements Serializable{
 		return wordNames.toString();
 	}
 
-	// Counter Logik: Beim Trainieren soll im Label mitgez�hlt werden, wieviele
+	// Counter Logik: Beim Trainieren soll im Label mitgezaehlt werden, wieviele
 	// richtige
-	// Antworten man am St�ck schafft.
+	// Antworten man am Stueck schafft.
 
 	public void counter(boolean choice) {
 		if (choice == true) {
