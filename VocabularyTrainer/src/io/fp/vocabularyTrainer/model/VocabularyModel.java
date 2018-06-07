@@ -139,6 +139,15 @@ public class VocabularyModel implements Serializable{
 		}
 		return compare;
 	}
+	
+	public boolean compareLanguage(Language l1, Language l2 ) {
+		boolean compare = false;
+		if(l1.equals(l2)) {
+			compare = true;
+		}
+		return compare; 
+	}
+	
 
 	// Bereits oben beschrieben
 	private void addForStart() {

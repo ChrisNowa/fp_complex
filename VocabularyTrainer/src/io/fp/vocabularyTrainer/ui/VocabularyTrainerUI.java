@@ -1,6 +1,6 @@
 package io.fp.vocabularyTrainer.ui;
 
-import java.io.IOException;  
+import java.io.IOException;
 import java.util.List;
 
 import io.fp.vocabularyTrainer.dao.VocabularyTrainerDAO;
@@ -58,20 +58,20 @@ public class VocabularyTrainerUI extends Application {
 	private VocabularyTrainerDAO dao;
 
 	public void init() throws Exception {
-//		 //init dao
-//		 Parameters params = getParameters();
-//		 List<String> paramList = params.getRaw();
-//		 if (paramList.size()<1) {
-//		 throw new IOException("No parameter defined for file name!");
-//		 }
-//		 dao = new VocabularyTrainerDAOImpl(paramList.get(0));
-//
-//		// init model
-//		try {
-//			model = dao.readModel();
-//		} catch (IOException e) {
-//			model = dao.createModel();
-//		}
+		// //init dao
+		// Parameters params = getParameters();
+		// List<String> paramList = params.getRaw();
+		// if (paramList.size()<1) {
+		// throw new IOException("No parameter defined for file name!");
+		// }
+		// dao = new VocabularyTrainerDAOImpl(paramList.get(0));
+		//
+		// // init model
+		// try {
+		// model = dao.readModel();
+		// } catch (IOException e) {
+		// model = dao.createModel();
+		// }
 
 		// init rest
 		model = new VocabularyModel();
@@ -115,6 +115,17 @@ public class VocabularyTrainerUI extends Application {
 
 			word2D.setPromptText(choiceWord2D.getValue().toString());
 		});
+		choiceWord1V.setOnAction(e -> {
+			wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
+			languageDirectionV.setText(
+					"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+		});
+
+		choiceWord2V.setOnAction(e -> {
+			languageDirectionV.setText(
+					"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+
+		});
 		// sentenceD ist damit fertig
 		sentenceD = new Label("Ein neues Wort in das Woerterbuch eintragen: ");
 		// resultV ist die Meldung nach bestätigen beim Vokalbeltrainer
@@ -147,23 +158,32 @@ public class VocabularyTrainerUI extends Application {
 				Word word = model.getWord1(textInputFieldV.getText());
 				Word word2 = model.getWord1(wordV.getText());
 				// Die Methode so veraendert, das sie für ArrayList funktioniert
-				if (model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == true) {
-					resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
-					wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-					textInputFieldV.clear();
-					;
-					// Logik fuer Counter
-					model.counter(true);
-					counterLabel.setText("Richtige Antworten: " + model.getCounter());
-				}
-				if (model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == false) {
-					resultV.setText("Die Uebersetzung war falsch! Versuche es noch einmal!");
-					textInputFieldV.clear();
-					;
-					// Logik fuer Counter
-					model.counter(false);
-					counterLabel.setText("Richtige Antworten: " + model.getCounter());
+				if (!model.getWordList().contains(model.getWord1(textInputFieldV.getText()))) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Wort nicht enthalten");
+					alert.setHeaderText("Fehler");
+					alert.setContentText("Dieses Wort ist nicht im Woerterbuch enthalten");
+					alert.showAndWait();
 
+				} else {
+					if ((model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == true) && (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == true)) {
+						resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
+						wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
+						textInputFieldV.clear();
+						;
+						// Logik fuer Counter
+						model.counter(true);
+						counterLabel.setText("Richtige Antworten: " + model.getCounter());
+					}
+					if((model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == false) || (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == false)) {
+						resultV.setText("Die Uebersetzung war falsch! Versuche es noch einmal!");
+						textInputFieldV.clear();
+						;
+						// Logik fuer Counter
+						model.counter(false);
+						counterLabel.setText("Richtige Antworten: " + model.getCounter());
+
+					}
 				}
 			}
 
@@ -227,28 +247,24 @@ public class VocabularyTrainerUI extends Application {
 			}
 			word1D.clear();
 			word2D.clear();
-			
 
 		});
 		// Das Woerterbuch kann hiermit persistent werden. Bis jetzt noch nicht
 		// behandelt.
 		persistanceD = new Button("Woerterbuch speichern");
 		persistanceD.setOnAction(e -> {
-//			try {
-//				dao.updateModel(model);
-//			} catch (IOException ex) {
-//				showAlert("Can't write to File!");
-//				ex.printStackTrace();
-//			}
+			// try {
+			// dao.updateModel(model);
+			// } catch (IOException ex) {
+			// showAlert("Can't write to File!");
+			// ex.printStackTrace();
+			// }
 		});
-		deleteD= new Button("Loesche Woerterbuch und HighScore!");
-		deleteD.setOnAction(e->{
-			
-			
+		deleteD = new Button("Loesche Woerterbuch und HighScore!");
+		deleteD.setOnAction(e -> {
+
 		});
-			
-		
-	
+
 		// Label, um die Dictionary Woerter zu sehen.
 		showDictionaryD = new Label();
 		// Button der einem das Dictionary zeigt.
