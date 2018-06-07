@@ -15,7 +15,7 @@ public class VocabularyModel implements Serializable {
 	 */
 	private static final long serialVersionUID = -3040038594094679081L;
 	private ArrayList<Word> wordList;
-	private Integer orderNumbers;
+	private int orderNumber;
 	private Random random;
 	private Integer counter;
 	private Language rememberV1;
@@ -29,21 +29,19 @@ public class VocabularyModel implements Serializable {
 		// Add for Start fügt schonmal 3 Woertersatz hinzu. Siehe Methode
 		addForStart();
 		// Daher auch orderNumbers = 4, da addForStart
-		orderNumbers = 4;
+		orderNumber = 4;
 		random = new Random();
 		counter = 0;
 		prevWord = null;
 	}
 
 	public void addNewWordPair(String l1Word, Language l1, String l2Word, Language l2) throws WordException {
-		Word word1 = new Word(l1Word, orderNumbers, l1);
-		Word word2 = new Word(l2Word, orderNumbers, l2);
+		Word word1 = new Word(l1Word, orderNumber, l1);
+		Word word2 = new Word(l2Word, orderNumber, l2);
 		// Die Alternativen WordListen habe ich hinzugefuegt, um zu vermeiden, dass die
 		// WortListe waehrend des Lesens
 		// erweitert wird(durch add), um eine Exception zu vermeiden. Bei einem
-		// Sonderfall schmeißt es momentan dennoch diese
-		// Exception, das Programm funktioniert aber einwandfrei. Nun mit der Methode
-		// addAll behandelt.
+
 		ArrayList<Word> alternativeWordList = new ArrayList<>();
 		alternativeWordList.addAll(wordList);
 		ArrayList<Word> alternativeWordList2 = new ArrayList<>();
@@ -62,30 +60,30 @@ public class VocabularyModel implements Serializable {
 						throw new WordException("Beide Woerter bereits enthalten");
 					}
 				}
+			} else {
+				if (word.getWord().equals(word1.getWord())) {
+					word1.getOrderNumbers().add((orderNumber));
+					wordList.add(word2);
+					
+				} else if (word.getWord().equals(word2.getWord())) {
+					word2.getOrderNumbers().add((orderNumber));
+					wordList.add(word1);
+					
+				}
+				
 			}
-
-			if (word.getWord().equals(word1.getWord())) {
-				word1.getOrderNumbers().add((orderNumbers));
-				wordList.add(word2);
-				orderNumbers++;
-			} else if (word.getWord().equals(word2.getWord())) {
-				word2.getOrderNumbers().add((orderNumbers));
+			// Hier wird die nun aktualisierte WordList der zweiten alternativenListe
+			// hinzugefuegt
+			alternativeWordList2.addAll(wordList);
+			// Wenn bis jetzt noch nicht hinzugefuegt wurde, sind die beiden alternativen
+			// Listen gleich.
+			// Dann werden beide Wörter hinzugefuegt.
+			if (alternativeWordList.equals(alternativeWordList2)) {
 				wordList.add(word1);
-				orderNumbers++;
+				wordList.add(word2);
+				orderNumber++;
 			}
 		}
-		// Hier wird die nun aktualisierte WordList der zweiten alternativenListe
-		// hinzugefuegt
-		alternativeWordList2.addAll(wordList);
-		// Wenn bis jetzt noch nicht hinzugefuegt wurde, sind die beiden alternativen
-		// Listen gleich.
-		// Dann werden beide Wörter hinzugefuegt.
-		if (alternativeWordList.equals(alternativeWordList2)) {
-			wordList.add(word1);
-			wordList.add(word2);
-			orderNumbers++;
-		}
-
 	}
 
 	// Hat momentan keine bedeutung

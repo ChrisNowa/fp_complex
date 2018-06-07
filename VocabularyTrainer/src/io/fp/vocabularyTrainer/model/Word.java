@@ -11,7 +11,7 @@ private ArrayList<Integer> orderNumbers;
 private Language language;
 
 
-public Word(String word, Integer orderNumber, Language language) {
+public Word(String word, int orderNumber, Language language) {
 	this.word = word;
 	orderNumbers = new ArrayList<>();
 	orderNumbers.add(orderNumber);

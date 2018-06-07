@@ -8,7 +8,7 @@ Fehler Vokabeltrainer:
 Ist glaube ich Standard, dass in der UI nur ein Model ist und keine Klassen.
 Fehler Woerterbuch:
 5. Das Woerterbuch muss noch persistent werden.
-
+6. OrderNumber Fehler. Siehe Main Methode.
 
 View:
 1. Es sollte noch das Design verschoenert werden.
