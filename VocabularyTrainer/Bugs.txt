@@ -1,9 +1,9 @@
 Fehler Vokabeltrainer:
 1.Delete Button für das Löschen des Wörterbuchs eingeben.
-2. Random funktioniert im Moment nicht.
+2. Random muss verbessert werden. Hier muss neben des Language ueberprueft werden, ob das Wort, dasselbe ist, das zuvor ueberprueft wurde.
 3. Highscore toString sortiert nicht.
 4. Highscore muss erfasst werden, wenn ein Spieler ausscheidet, muss geprueft werden,
-	ob dieser H�her als der kleinste HighScore ist, falls das der FAll ist, muss er der Map
+	ob dieser H�her als der kleinste HighScore ist, falls das der FAll ist, muss er der Map
 	hinzugefuegt werden.
 Fehler Woerterbuch:
 1. Das Woerterbuch muss noch persistent werden.
