@@ -4,8 +4,10 @@ Fehler Vokabeltrainer:
 3. Highscore muss erfasst werden, wenn ein Spieler ausscheidet, muss geprueft werden,
 	ob dieser H�her als der kleinste HighScore ist, falls das der FAll ist, muss er der Map
 	hinzugefuegt werden.
+4. Der HighScore muss noch ins Model aufgenommen werden. Dafür sollte die HighscoreKlasse nicht in der UI stehen.
+Ist glaube ich Standard, dass in der UI nur ein Model ist und keine Klassen.
 Fehler Woerterbuch:
-4. Das Woerterbuch muss noch persistent werden.
+5. Das Woerterbuch muss noch persistent werden.
 
 
 View:

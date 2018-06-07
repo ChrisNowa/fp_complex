@@ -26,10 +26,10 @@ public class VocabularyModel implements Serializable {
 
 	public VocabularyModel() {
 		wordList = new ArrayList<Word>();
-		// Add for Start fügt schonmal einen Woertersatz hinzu. Siehe Methode
+		// Add for Start fügt schonmal 3 Woertersatz hinzu. Siehe Methode
 		addForStart();
-		// Daher auch orderNumbers = 1, da addForStart
-		orderNumbers = 1;
+		// Daher auch orderNumbers = 4, da addForStart
+		orderNumbers = 4;
 		random = new Random();
 		counter = 0;
 		prevWord = null;
