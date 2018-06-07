@@ -22,7 +22,7 @@ public class Highscore {
 		
 		for (Entry<Integer, ArrayList<String>> entry : scores.entrySet())
 				{
-				    highScoreList.add(i + ". Platz:" + entry.getKey() + " richtige in Folge von " + entry.getValue() + "\n");
+				    highScoreList.add(i + ". Platz: " + entry.getKey() + " richtige in Folge von " + entry.getValue() + "\n");
 				    i++;
 				}
 		return highScoreList.toString();
