@@ -7,13 +7,12 @@ public class Word implements Serializable{
 	private static final long serialVersionUID = 5828823486941127715L;
 //Klasse für die Wörter. Ist denke ich selbsterklärend.
 private String word;
-private ArrayList<Integer> orderNumbers;
+private ArrayList<Integer> orderNumbers = new ArrayList<>();
 private Language language;
 
 
-public Word(String word, int orderNumber, Language language) {
+public Word(String word,int orderNumber, Language language) {
 	this.word = word;
-	orderNumbers = new ArrayList<>();
 	orderNumbers.add(orderNumber);
 	this.language = language;
 }
@@ -37,6 +36,8 @@ public Language getLanguage() {
 public void setLanguage(Language language) {
 	this.language = language;
 }
+
+
 
 
 

@@ -36,8 +36,8 @@ public class VocabularyModel implements Serializable {
 	}
 
 	public void addNewWordPair(String l1Word, Language l1, String l2Word, Language l2) throws WordException {
-		Word word1 = new Word(l1Word, orderNumber, l1);
-		Word word2 = new Word(l2Word, orderNumber, l2);
+		Word word1 = new Word(l1Word,orderNumber, l1);
+		Word word2 = new Word(l2Word,orderNumber, l2);
 		// Die Alternativen WordListen habe ich hinzugefuegt, um zu vermeiden, dass die
 		// WortListe waehrend des Lesens
 		// erweitert wird(durch add), um eine Exception zu vermeiden. Bei einem
@@ -177,7 +177,7 @@ public class VocabularyModel implements Serializable {
 
 	// Bereits oben beschrieben
 	private void addForStart() {
-		wordList.add(new Word("Hallo", 0, Language.GERMAN));
+		wordList.add(new Word("Hallo",0, Language.GERMAN));
 		wordList.add(new Word("Hello", 0, Language.ENGLISH));
 		wordList.add(new Word("Ave", 0, Language.LATIN));
 		wordList.add(new Word("Bonjour", 0, Language.FRENCH));
