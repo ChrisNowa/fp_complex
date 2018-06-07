@@ -16,15 +16,16 @@ public class Highscore {
 		//falls eine Liste schon existiert, darf es ja nicht ueberschrieben werden.
 	}
 	
-	//nicht fertig
-	public String toString_nichtFertig() {
-		int i = 0;		
+	public String highScoreToStringtig() {
+		int i = 1;
+		ArrayList<String> highScoreList = new ArrayList<>();
+		
 		for (Entry<Integer, ArrayList<String>> entry : scores.entrySet())
 				{
-				    System.out.println(i + ". Platz:" + entry.getKey() + "/" + entry.getValue());
+				    highScoreList.add(i + ". Platz:" + entry.getKey() + " richtige in Folge von " + entry.getValue() + "\n");
 				    i++;
 				}
-		return null;
+		return highScoreList.toString();
 		
 	}
 	

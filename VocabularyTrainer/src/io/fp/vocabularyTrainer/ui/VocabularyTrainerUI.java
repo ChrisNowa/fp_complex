@@ -334,7 +334,7 @@ public class VocabularyTrainerUI extends Application {
 		highscores = new Label();
 		//Test
 		highscore.setScore(5, "Chris");
-		highscores.setText(highscore.toString());
+		highscores.setText(highscore.highScoreToStringtig());
 
 	}
 
