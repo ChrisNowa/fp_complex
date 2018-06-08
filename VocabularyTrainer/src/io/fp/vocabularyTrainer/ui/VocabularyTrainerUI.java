@@ -343,7 +343,7 @@ public class VocabularyTrainerUI extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Vokabeltrainer");
 		primaryStage.setScene(new Scene(createSceneGraph(), 700, 300));
-		primaryStage.show();
+		primaryStage.show();;
 
 	}
 

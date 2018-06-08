@@ -124,10 +124,14 @@ public class VocabularyModel implements Serializable {
 		}
 
 		else {
-			while ((rightLanguage == false)) {
+			while(rightLanguage == false) {
 				if (word.getLanguage().equals(language)) {
 					rightLanguage = true;
 
+				}
+				else {
+					index = random.nextInt(wordList.size());
+					word = wordList.get(index);
 				}
 			}
 		}
