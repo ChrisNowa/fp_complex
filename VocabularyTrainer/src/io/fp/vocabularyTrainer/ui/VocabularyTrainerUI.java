@@ -11,7 +11,6 @@ import io.fp.vocabularyTrainer.model.Language;
 import io.fp.vocabularyTrainer.model.VocabularyModel;
 import io.fp.vocabularyTrainer.model.Word;
 import io.fp.vocabularyTrainer.model.WordException;
-import io.fp.vocabularyTrainer.model.Highscore;
 import javafx.application.Application;
 import javafx.application.Application.Parameters;
 import javafx.collections.FXCollections;
@@ -58,7 +57,6 @@ public class VocabularyTrainerUI extends Application {
 	private ChoiceBox<Language> choiceWord1D;
 	private ChoiceBox<Language> choiceWord2D;
 	private Label highscores;
-	private Highscore highscore;
 	// hier wird das dao als Datenfeld genannt.
 	private VocabularyTrainerDAO dao;
 
@@ -80,7 +78,6 @@ public class VocabularyTrainerUI extends Application {
 
 		// init rest
 		model = new VocabularyModel();
-		highscore = new Highscore();
 		translationSentenceV = new Label("Uebersetze das Wort");
 		textInputFieldV = new TextField();
 		textInputFieldV.setPromptText("Uebersetzung");
@@ -329,9 +326,9 @@ public class VocabularyTrainerUI extends Application {
 		
 		highscores = new Label();
 		//Test
-		highscore.setScore(5, "Chris");
-		highscore.setScore(7, "Harald");
-		highscores.setText(highscore.highScoreToString());
+		model.setScore(5, "Chris");
+		model.setScore(7, "Harald");
+		highscores.setText(model.highScoreToString());
 
 	}
 // Fuer DAO 
