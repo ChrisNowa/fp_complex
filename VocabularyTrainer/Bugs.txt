@@ -2,14 +2,14 @@ Fehler Vokabeltrainer:
 1.Delete Button für das Löschen des Wörterbuchs eingeben.
 
 2. Highscore toString sortiert nicht.
-
+4. Wenn zwei den selben Highscore haben, könnte das zu Problemen mit Key,Value führen, da es immer nur einen Key geben kann.
 3. Highscore muss erfasst werden, wenn ein Spieler ausscheidet, muss geprueft werden,
 	ob dieser Hoeher als der kleinste HighScore ist, falls das der FAll ist, muss er der Map
 	hinzugefuegt werden.
 
 Fehler Woerterbuch:
 5. Das Woerterbuch muss noch persistent werden.
-6. OrderNumber Fehler. Siehe Main Methode.
+
 
 View:
 1. Es sollte noch das Design verschoenert werden.

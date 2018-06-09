@@ -1,6 +1,6 @@
 package io.fp.vocabularyTrainer.model;
 
-import java.io.Serializable;
+import java.io.Serializable; 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,10 +10,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
-// Was macht dieser Import? Wenn ich Ihn auskommentiere, funktioniert die Logik bei einer Falscheingabe nicht
-// Lt. Exception in Zeile 106 bei der UI
-// import com.sun.org.apache.bcel.internal.generic.GOTO;
-//Bei mir kommt der Import nicht vor
+//Model 
 public class VocabularyModel implements Serializable {
 	/**
 	 * 
