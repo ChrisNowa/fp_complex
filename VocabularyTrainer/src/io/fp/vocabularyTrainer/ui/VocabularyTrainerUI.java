@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.border.MatteBorder;
+
 import io.fp.vocabularyTrainer.dao.VocabularyTrainerDAO;
 import io.fp.vocabularyTrainer.daoImpl.VocabularyTrainerDAOImpl;
 import io.fp.vocabularyTrainer.model.Language;
@@ -27,8 +30,10 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -102,9 +107,12 @@ public class VocabularyTrainerUI extends Application {
 		word1D = new TextField();
 		word1D.setPromptText(choiceWord1D.getValue().toString());
 		word1D.setPrefColumnCount(20);
+		word1D.setMaxWidth(200);
+		
 		word2D = new TextField();
 		word2D.setPromptText(choiceWord2D.getValue().toString());
 		word2D.setPrefColumnCount(20);
+		word2D.setMaxWidth(200);
 		//So merkt man sich den vorherigen Wert der ChoiceBox. Für Logik, wenn zweimal das Gleiche gewaehlt, wichtig.
 		choiceWord1D.setOnMouseClicked(e->{
 			model.setRememberD1(choiceWord1D.getValue());
@@ -355,19 +363,24 @@ public class VocabularyTrainerUI extends Application {
 		VBox box1 = new VBox();
 		Tab tab1 = new Tab();
 		FlowPane flow1 = new FlowPane();
+		flow1.setAlignment(Pos.CENTER);
 		FlowPane flow2 = new FlowPane();
+		flow2.setAlignment(Pos.CENTER);
 		flow2.getChildren().addAll(textInputFieldV, confirmV);
 		flow1.getChildren().addAll(choiceWord1V, choiceWord2V);
 		tab1.setText("Trainieren");
 		box1.getChildren().addAll(translationSentenceV, wordV, languageDirectionV, flow1, flow2, changeDirectionV,
 				resultV, counterLabel);
 		box1.setAlignment(Pos.TOP_CENTER);
+		box1.setSpacing(10);
 		tab1.setContent(box1);
 		Tab tab2 = new Tab();
 		tab2.setText("Woerterbuch");
 		VBox box2 = new VBox();
 		FlowPane flow3 = new FlowPane();
+		flow3.setAlignment(Pos.CENTER);
 		FlowPane flow4 = new FlowPane();
+		flow4.setAlignment(Pos.CENTER);
 		Tab tab3 = new Tab();
 		tab3.setText("Highscores");
 		VBox box3 = new VBox();
@@ -375,8 +388,10 @@ public class VocabularyTrainerUI extends Application {
 		box3.getChildren().addAll(highscores);
 		flow3.getChildren().addAll(choiceWord1D, choiceWord2D);
 		flow4.getChildren().addAll(word1D, word2D, addD);
+		
 		box2.getChildren().addAll(sentenceD, flow3, flow4, persistanceD, showDictionaryD, getDictionaryD);
 		box2.setAlignment(Pos.TOP_CENTER);
+		box2.setSpacing(10);
 		tab2.setContent(box2);
 		pane.getTabs().add(tab1);
 		pane.getTabs().add(tab2);
