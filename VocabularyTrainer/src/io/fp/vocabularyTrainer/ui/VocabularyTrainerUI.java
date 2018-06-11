@@ -250,6 +250,8 @@ public class VocabularyTrainerUI extends Application {
 						// Logik fuer Counter
 						model.counter(false);
 						counterLabel.setText("Richtige Antworten: " + model.getCounter());
+						
+						// Wenn Anzahl der Worte im Highscore drin ist, soll nach dem Namen gefragt werden.
 						if(model.checkScore(model.getCounter_int()) == true) {
 							
 							TextInputDialog dialog = new TextInputDialog("");
@@ -257,7 +259,7 @@ public class VocabularyTrainerUI extends Application {
 							dialog.setHeaderText("Du hast den Highscore!");
 							dialog.setContentText("Trag hier deinen Namen ein:");
 
-							// Traditional way to get the response value.
+							// Antwort abholen und eintragen.
 							Optional<String> result = dialog.showAndWait();
 							if (result.isPresent()){
 							    model.setScore(model.getCounter_int(), result.get());
