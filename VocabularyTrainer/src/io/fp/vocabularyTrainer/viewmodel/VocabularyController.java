@@ -41,7 +41,6 @@ public class VocabularyController {
 		languageDirectionV.setText(
 				"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
 	}
-	}
 	
 	
 	@FXML
