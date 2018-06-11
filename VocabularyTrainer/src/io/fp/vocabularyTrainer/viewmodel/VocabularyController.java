@@ -5,6 +5,7 @@ import io.fp.vocabularyTrainer.model.Language;
 import io.fp.vocabularyTrainer.model.VocabularyModel;
 import io.fp.vocabularyTrainer.model.Word;
 import io.fp.vocabularyTrainer.model.WordException;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -12,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
 
 public class VocabularyController {
@@ -24,27 +26,25 @@ public class VocabularyController {
 
 	@FXML
 	private Label translationSentenceV;
-	
+	// fertig
 
 	@FXML
 	private Label wordV;
-		
-	
+
 	@FXML
 	public void setWordV() {
-	wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-	}
-	@FXML
-	private Label languageDirectionV;
-	
-	@FXML
-	private void setLanguageDirectionV() {
-		languageDirectionV.setText(
-				"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+		wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 	}
 
-	
-	
+	@FXML
+	private Label languageDirectionV;
+
+	@FXML
+	private void setLanguageDirectionV() {
+		languageDirectionV
+				.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+	}
+
 	@FXML
 	private Button confirmV;
 
@@ -95,8 +95,16 @@ public class VocabularyController {
 
 	@FXML
 	private TextField textInputFieldV;
+
+	@FXML
+	public void setTextInputFieldV() {
+		textInputFieldV.setPromptText("Uebersetzung");
+		textInputFieldV.setPrefColumnCount(20);
+	}
+
 	@FXML
 	private Label resultV;
+	// fertig
 	@FXML
 	private Button changeDirectionV;
 
@@ -122,12 +130,29 @@ public class VocabularyController {
 
 	@FXML
 	private Label sentenceD;
+	// fertig
 	@FXML
 	private Label counterLabel;
+	// fertig
 	@FXML
 	private TextField word1D;
+
+	@FXML
+	public void setWord1D() {
+		word1D.setPromptText(choiceWord1D.getValue().toString());
+		word1D.setPrefColumnCount(20);
+	}
+
 	@FXML
 	private TextField word2D;
+
+	@FXML
+
+	public void setWord2D() {
+		word2D.setPromptText(choiceWord2D.getValue().toString());
+		word2D.setPrefColumnCount(20);
+	}
+
 	@FXML
 	private Button addD;
 
@@ -181,12 +206,116 @@ public class VocabularyController {
 
 	@FXML
 	private ChoiceBox<Language> choiceWord1V;
+
+	@FXML
+	public void setChoiceWord1V() {
+		choiceWord1V.setItems(FXCollections.observableArrayList(Language.values()));
+		choiceWord1V.setValue(Language.GERMAN);
+	}
+
+	public void setChoiceWord1VMouseAction(MouseEvent mouse) {
+		model.setRememberV1(choiceWord1V.getValue());
+	}
+
+	public void mouseClicked1V(ActionEvent event) {
+		Language value = model.getRememberV1();
+		
+		if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
+			choiceWord1V.setValue(choiceWord2V.getValue());
+			choiceWord2V.setValue(value);
+			model.counter(false);
+			counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
+		}
+		
+		
+		wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
+		languageDirectionV.setText(
+				"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+       
+	}
+
 	@FXML
 	private ChoiceBox<Language> choiceWord2V;
+
+	@FXML
+	public void setChoiceWord2V() {
+		choiceWord2V.setItems(FXCollections.observableArrayList(choiceWord1V.getItems()));
+		choiceWord2V.setValue(Language.ENGLISH);
+	}
+
+	public void mouseClicked2V(MouseEvent mouse) {
+		model.setRememberD2(choiceWord2D.getValue());
+	}
+
+	public void setChoiceWord2VSetOnAction(ActionEvent event) {
+		Language value = model.getRememberV2();
+		
+		if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
+			choiceWord2V.setValue(choiceWord1V.getValue());
+			choiceWord1V.setValue(value);
+			model.counter(false);
+			counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
+		}
+		
+		
+		languageDirectionV.setText(
+				"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+      
+	}
+
 	@FXML
 	private ChoiceBox<Language> choiceWord1D;
+
+	@FXML
+	public void setChoiceWord1D() {
+		choiceWord1D.setItems(FXCollections.observableArrayList(Language.values()));
+		choiceWord1D.setValue(Language.GERMAN);
+	}
+
+	
+
+	public void mouseClicked1D(MouseEvent mouse) {
+		model.setRememberD1(choiceWord1D.getValue());
+	}
+
+	public void setChoiceWord1DSetOnAction(ActionEvent event) {
+		Language value = model.getRememberD1();
+		
+		if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
+			choiceWord1D.setValue(choiceWord2D.getValue());
+			choiceWord2D.setValue(value);
+			model.counter(false);
+			counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
+		}
+
+		word1D.setPromptText(choiceWord1D.getValue().toString());
+	}
+
 	@FXML
 	private ChoiceBox<Language> choiceWord2D;
+
+	@FXML
+	public void setChoiceWord2D() {
+		choiceWord2D.setItems(FXCollections.observableArrayList(choiceWord1V.getItems()));
+		choiceWord2D.setValue(Language.ENGLISH);
+	}
+
+	public void mouseClicked2D(MouseEvent mouse) {
+		model.setRememberD2(choiceWord2D.getValue());
+	}
+	
+	public void setChoiceWord2DSetOnAction(ActionEvent event) {
+		  Language value = model.getRememberD2();
+			
+			if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
+				choiceWord2D.setValue(choiceWord1D.getValue());
+				choiceWord1D.setValue(value);
+				model.counter(false);
+				counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
+			}
+			word2D.setPromptText(choiceWord2D.getValue().toString());
+	}
+
 	@FXML
 	private Label highscores;
 
