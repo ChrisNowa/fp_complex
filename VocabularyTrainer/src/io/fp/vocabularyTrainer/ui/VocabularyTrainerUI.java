@@ -269,7 +269,7 @@ public class VocabularyTrainerUI extends Application {
 		// Fuegt die Woerter in das Woertbuch ein. Hier sollen keine Duplikate
 		// entstehen.
 		addD = new Button("Hinzufuegen");
-		addD.setOnAction((ActionEvent e) -> {
+		addD.setOnAction(e -> {
 
 			String word1 = word1D.getText().toString();
 			String word2 = word2D.getText().toString();
