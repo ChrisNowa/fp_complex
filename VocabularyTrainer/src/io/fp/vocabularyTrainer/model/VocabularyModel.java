@@ -1,7 +1,8 @@
 package io.fp.vocabularyTrainer.model;
 
-import java.io.Serializable; 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class VocabularyModel implements Serializable {
 	private Language rememberD1;
 	private Language rememberD2;
 	private Word prevWord;
-	private Map<Integer, String> scores;
+	private Map<Integer, ArrayList<String>> scores;
 
 	public VocabularyModel() {
 		wordList = new ArrayList<Word>();
@@ -37,7 +38,7 @@ public class VocabularyModel implements Serializable {
 		counter = 0;
 		prevWord = null;
 		// Highscore Logik
-		scores = new TreeMap<Integer, String>();
+		scores = new TreeMap<Integer, ArrayList<String>>(Collections.reverseOrder());
 		// Evtl muss hier nachher eine If-Else Bedingung fuer das DAO
 		// falls eine Liste schon existiert, darf es ja nicht ueberschrieben werden.
 	}
@@ -228,23 +229,45 @@ public class VocabularyModel implements Serializable {
 		int i = 1;
 		ArrayList<String> highScoreList = new ArrayList<>();
 
-		 for (Entry<Integer, String> entry : scores.entrySet())
-		 {
-		 highScoreList.add(i + ". Platz: " + entry.getKey() + " richtige in Folge von" + entry.getValue() + "\n");
-		 i++;
-		 }
+		for (Entry<Integer, ArrayList<String>> entry : scores.entrySet()) {
+			highScoreList.add(i + ". Platz: " + entry.getKey() + " richtige in Folge von" + entry.getValue() + "\n");
+			i++;
+		}
 
-//		for (Integer key : scores.keySet()) {
-//			highScoreList.add(i + ". Platz: " + key + " richtige in Folge von " + scores.get(key) + "\n");
-//			i++;
-//		}
+		// for (Integer key : scores.keySet()) {
+		// highScoreList.add(i + ". Platz: " + key + " richtige in Folge von " +
+		// scores.get(key) + "\n");
+		// i++;
+		// }
 
 		return highScoreList.toString();
 
 	}
 
 	public void setScore(int anzahl, String name) {
-		scores.put(anzahl, name);
+		if (scores.containsKey(anzahl)) {
+			// Wenn bereits Namen drin stehen, muss ja nur der neue hinzugefuegt werden,
+			// die alten duerfen jedoch nicht geloescht werden.
+
+			// Daher neue Liste die nachher alle Namen hat.
+			ArrayList<String> neueNamen = new ArrayList<>();
+			// Die Liste mit den bisherigen Namen
+			ArrayList<String> alteNamen = scores.get(anzahl);
+
+			// Nun werden alle Namen der neuen Liste hinzugefuegt.
+			for (int i = 0; i < alteNamen.size(); i++) {
+				neueNamen.add(alteNamen.get(i));
+			}
+			// Und der neue Name natuerlich auch.
+			neueNamen.add(name);
+
+			// Nun wird alles der TreeMap hinzugefuegt:
+			scores.put(anzahl, neueNamen);
+		} else {
+			ArrayList<String> neueNamen = new ArrayList<>();
+			neueNamen.add(name);
+			scores.put(anzahl, neueNamen);
+		}
 	}
 
 	public String getCounter() {
