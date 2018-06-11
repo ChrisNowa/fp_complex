@@ -1,3 +1,4 @@
+
 package io.fp.vocabularyTrainer.viewmodel;
 
 import io.fp.vocabularyTrainer.model.Language;
@@ -41,6 +42,7 @@ public class VocabularyController {
 		languageDirectionV.setText(
 				"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
 	}
+
 	
 	
 	@FXML

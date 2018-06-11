@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="902.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+  <tabs>
+    <Tab text="Untitled Tab 1">
+         <content>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="translationSentenceV" alignment="BOTTOM_RIGHT" text="Uebersetze das Wort">
+                     <VBox.margin>
+                        <Insets bottom="30.0" top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="wordV" text="Label">
+                     <VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="languageDirectionV" text="Label" />
+               </children>
+            </VBox>
+         </content></Tab>
+    <Tab text="Untitled Tab 2">
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0" />
+         </content></Tab>
+      <Tab text="Untitled Tab">
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0" />
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>
