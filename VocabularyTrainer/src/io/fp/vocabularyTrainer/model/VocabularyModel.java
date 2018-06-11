@@ -230,18 +230,10 @@ public class VocabularyModel implements Serializable {
 		ArrayList<String> highScoreList = new ArrayList<>();
 
 		for (Entry<Integer, ArrayList<String>> entry : scores.entrySet()) {
-			highScoreList.add(i + ". Platz: " + entry.getKey() + " richtige in Folge von" + entry.getValue() + "\n");
+			highScoreList.add(i + ". Platz: " + entry.getKey() + " richtige in Folge von " + entry.getValue() + "\n");
 			i++;
 		}
-
-		// for (Integer key : scores.keySet()) {
-		// highScoreList.add(i + ". Platz: " + key + " richtige in Folge von " +
-		// scores.get(key) + "\n");
-		// i++;
-		// }
-
 		return highScoreList.toString();
-
 	}
 
 	public void setScore(int anzahl, String name) {
