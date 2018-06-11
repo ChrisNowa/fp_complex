@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.BorderFactory;
 import javax.swing.border.MatteBorder;
@@ -30,6 +31,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -248,6 +250,20 @@ public class VocabularyTrainerUI extends Application {
 						// Logik fuer Counter
 						model.counter(false);
 						counterLabel.setText("Richtige Antworten: " + model.getCounter());
+						if(model.checkScore(model.getCounter_int()) == true) {
+							
+							TextInputDialog dialog = new TextInputDialog("");
+							dialog.setTitle("Highscore!!");
+							dialog.setHeaderText("Du hast den Highscore!");
+							dialog.setContentText("Trag hier deinen Namen ein:");
+
+							// Traditional way to get the response value.
+							Optional<String> result = dialog.showAndWait();
+							if (result.isPresent()){
+							    model.setScore(model.getCounter_int(), result.get());
+							}
+							
+						}
 
 					}
 				}
@@ -336,10 +352,11 @@ public class VocabularyTrainerUI extends Application {
 		
 		highscores = new Label();
 		//Test
-		model.setScore(5, "Chris");
-		model.setScore(7, "Harald");
-		model.setScore(4, "Dieter");
-		model.setScore(5, "Griezi");
+//		model.setScore(5, "Chris");
+//		model.setScore(7, "Harald");
+//		model.setScore(4, "Dieter");
+//		model.setScore(5, "Griezi");
+		model.setScore(1, "Chris");
 		highscores.setText(model.highScoreToString());
 
 	}

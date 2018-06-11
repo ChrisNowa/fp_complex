@@ -232,10 +232,34 @@ public class VocabularyModel implements Serializable {
 		for (Entry<Integer, ArrayList<String>> entry : scores.entrySet()) {
 			highScoreList.add(i + ". Platz: " + entry.getKey() + " richtige in Folge von " + entry.getValue() + "\n");
 			i++;
+			//Abbruchbedingung, dass nicht mehr als 5 Plaetze angezeigt werden.
+			if(i>5) {
+				break;
+			}
 		}
 		return highScoreList.toString();
 	}
 
+	public boolean checkScore(Integer anzahl) {
+		int i = 1;
+		boolean marker = false;
+		for (Entry<Integer, ArrayList<String>> entry : scores.entrySet()) {
+			if(entry.getKey() <= anzahl) {
+				marker = true;
+			}
+			i++;
+			//Abbruchbedingung, dass nicht mehr als 5 Plaetze ueberprueft werden.
+			if(i>5) {
+				break;
+			}
+		}
+		if (marker==true) {
+			return true;
+		} else { 
+			return false;}
+	}
+	
+	
 	public void setScore(int anzahl, String name) {
 		if (scores.containsKey(anzahl)) {
 			// Wenn bereits Namen drin stehen, muss ja nur der neue hinzugefuegt werden,
@@ -255,13 +279,17 @@ public class VocabularyModel implements Serializable {
 
 			// Nun wird alles der TreeMap hinzugefuegt:
 			scores.put(anzahl, neueNamen);
-		} else {
+		} else { //Wenn der Score neu ist.
 			ArrayList<String> neueNamen = new ArrayList<>();
 			neueNamen.add(name);
 			scores.put(anzahl, neueNamen);
 		}
 	}
 
+	public int getCounter_int() {
+		return counter;
+	}
+	
 	public String getCounter() {
 		return "" + counter;
 	}
