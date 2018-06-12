@@ -1,6 +1,6 @@
 package io.fp.vocabularyTrainer.ui;
 
-import java.io.IOException; 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -68,23 +68,23 @@ public class VocabularyTrainerUI extends Application {
 	private VocabularyTrainerDAO dao;
 
 	public void init() throws Exception {
-		// //init dao
-		// Parameters params = getParameters();
-		// List<String> paramList = params.getRaw();
-		// if (paramList.size()<1) {
-		// throw new IOException("No parameter defined for file name!");
-		// }
-		// dao = new VocabularyTrainerDAOImpl(paramList.get(0));
-		//
-		// // init model
-		// try {
-		// model = dao.readModel();
-		// } catch (IOException e) {
-		// model = dao.createModel();
-		// }
+		 //init dao
+		 Parameters params = getParameters();
+		 List<String> paramList = params.getRaw();
+		 if (paramList.size()<1) {
+		 throw new IOException("No parameter defined for file name!");
+		 }
+		 dao = new VocabularyTrainerDAOImpl(paramList.get(0));
+		
+		 // init model
+		 try {
+		 model = dao.readModel();
+		 } catch (IOException e) {
+		 model = dao.createModel();
+		 }
 
 		// init rest
-		model = new VocabularyModel();
+		
 		translationSentenceV = new Label("Uebersetze das Wort");
 		textInputFieldV = new TextField();
 		textInputFieldV.setPromptText("Uebersetzung");
@@ -110,20 +110,21 @@ public class VocabularyTrainerUI extends Application {
 		word1D.setPromptText(choiceWord1D.getValue().toString());
 		word1D.setPrefColumnCount(20);
 		word1D.setMaxWidth(200);
-		
+
 		word2D = new TextField();
 		word2D.setPromptText(choiceWord2D.getValue().toString());
 		word2D.setPrefColumnCount(20);
 		word2D.setMaxWidth(200);
-		//So merkt man sich den vorherigen Wert der ChoiceBox. Für Logik, wenn zweimal das Gleiche gewaehlt, wichtig.
-		choiceWord1D.setOnMouseClicked(e->{
+		// So merkt man sich den vorherigen Wert der ChoiceBox. Für Logik, wenn zweimal
+		// das Gleiche gewaehlt, wichtig.
+		choiceWord1D.setOnMouseClicked(e -> {
 			model.setRememberD1(choiceWord1D.getValue());
 		});
-		
+
 		choiceWord1D.setOnAction(e -> {
 			Language value = model.getRememberD1();
-			
-			if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
+
+			if (choiceWord1D.getValue().equals(choiceWord2D.getValue())) {
 				choiceWord1D.setValue(choiceWord2D.getValue());
 				choiceWord2D.setValue(value);
 				model.counter(false);
@@ -133,15 +134,14 @@ public class VocabularyTrainerUI extends Application {
 			word1D.setPromptText(choiceWord1D.getValue().toString());
 
 		});
-		choiceWord2D.setOnMouseClicked(e->{
+		choiceWord2D.setOnMouseClicked(e -> {
 			model.setRememberD2(choiceWord2D.getValue());
 		});
-		
-		
+
 		choiceWord2D.setOnAction(e -> {
-             Language value = model.getRememberD2();
-			
-			if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
+			Language value = model.getRememberD2();
+
+			if (choiceWord1D.getValue().equals(choiceWord2D.getValue())) {
 				choiceWord2D.setValue(choiceWord1D.getValue());
 				choiceWord1D.setValue(value);
 				model.counter(false);
@@ -149,50 +149,48 @@ public class VocabularyTrainerUI extends Application {
 			}
 			word2D.setPromptText(choiceWord2D.getValue().toString());
 		});
-		
-		choiceWord1V.setOnMouseClicked(e->{
+
+		choiceWord1V.setOnMouseClicked(e -> {
 			model.setRememberV1(choiceWord1V.getValue());
 		});
-		
+
 		choiceWord1V.setOnAction(e -> {
-          
+
 			Language value = model.getRememberV1();
-			
-			if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
+
+			if (choiceWord1V.getValue().equals(choiceWord2V.getValue())) {
 				choiceWord1V.setValue(choiceWord2V.getValue());
 				choiceWord2V.setValue(value);
 				model.counter(false);
 				counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 			}
-			
-			
+
 			wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 			languageDirectionV.setText(
 					"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
-           
-           });
 
-		choiceWord2V.setOnMouseClicked(e->{
-		model.setRememberV2(choiceWord2V.getValue());
-		model.counter(false);
-		counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 		});
-		
+
+		choiceWord2V.setOnMouseClicked(e -> {
+			model.setRememberV2(choiceWord2V.getValue());
+			model.counter(false);
+			counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
+		});
+
 		choiceWord2V.setOnAction(e -> {
-         
+
 			Language value = model.getRememberV2();
-			
-			if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
+
+			if (choiceWord1V.getValue().equals(choiceWord2V.getValue())) {
 				choiceWord2V.setValue(choiceWord1V.getValue());
 				choiceWord1V.setValue(value);
 				model.counter(false);
 				counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 			}
-			
-			
+
 			languageDirectionV.setText(
 					"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
-          
+
 		});
 		// sentenceD ist damit fertig
 		sentenceD = new Label("Ein neues Wort in das Woerterbuch eintragen: ");
@@ -211,31 +209,50 @@ public class VocabularyTrainerUI extends Application {
 		// Counter Label
 		counterLabel = new Label();
 		counterLabel.setText("Richtige Antworten: " + model.getCounter());
-		// Der ConfirmV button bestaetigt die Eingabe beim Trainer. 
+		// Der ConfirmV button bestaetigt die Eingabe beim Trainer.
 		confirmV = new Button("Bestaetigen");
 		confirmV.setOnAction(e -> {
 			if (!textInputFieldV.getText().toString().isEmpty()) {
 				Word word = model.getWord1(textInputFieldV.getText());
 				Word word2 = model.getWord1(wordV.getText());
-				//Wenn Wort nicht im Woerterbuch enthalten ist.
+				// Wenn Wort nicht im Woerterbuch enthalten ist.
 				if (!model.getWordList().contains(model.getWord1(textInputFieldV.getText()))) {
 					model.counter(false);
 					counterLabel.setText("Richtige Antworten: " + model.getCounter());
 					resultV.setText("Die Uebersetzung war falsch! Versuch es noch einmal.");
-					Alert alert = new Alert(AlertType.ERROR);
-					alert.setTitle("Wort nicht enthalten");
-					alert.setHeaderText("Fehler");
-					alert.setContentText("Dieses Wort ist nicht im Woerterbuch enthalten");
-					alert.showAndWait();
-                    textInputFieldV.clear();
-				} 
-				//Wenn Wort im Woerterbuch enthalten ist.
+
+					// Wenn Anzahl der Worte im Highscore drin ist, soll nach dem Namen gefragt
+					// werden.
+					if (model.checkScore(model.getCounter_int()) == true) {
+
+						TextInputDialog dialog = new TextInputDialog("");
+						dialog.setTitle("Highscore!!");
+						dialog.setHeaderText("Du hast den Highscore!");
+						dialog.setContentText("Trag hier deinen Namen ein:");
+
+						// Antwort abholen und eintragen.
+						Optional<String> result = dialog.showAndWait();
+						if (result.isPresent()) {
+							model.setScore(model.getCounter_int(), result.get());
+						}
+
+					} else {
+
+						Alert alert = new Alert(AlertType.ERROR);
+						alert.setTitle("Wort nicht enthalten");
+						alert.setHeaderText("Fehler");
+						alert.setContentText("Dieses Wort ist nicht im Woerterbuch enthalten");
+						alert.showAndWait();
+					}
+					textInputFieldV.clear();
+				}
+				// Wenn Wort im Woerterbuch enthalten ist.
 				else {
 					if ((model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == true)
 							&& (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == true)) {
 						resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
 						wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-				       model.setPrevWord(model.getWord1(wordV.getText()));
+						model.setPrevWord(model.getWord1(wordV.getText()));
 						textInputFieldV.clear();
 						;
 						// Logik fuer Counter
@@ -250,10 +267,11 @@ public class VocabularyTrainerUI extends Application {
 						// Logik fuer Counter
 						model.counter(false);
 						counterLabel.setText("Richtige Antworten: " + model.getCounter());
-						
-						// Wenn Anzahl der Worte im Highscore drin ist, soll nach dem Namen gefragt werden.
-						if(model.checkScore(model.getCounter_int()) == true) {
-							
+
+						// Wenn Anzahl der Worte im Highscore drin ist, soll nach dem Namen gefragt
+						// werden.
+						if (model.checkScore(model.getCounter_int()) == true) {
+
 							TextInputDialog dialog = new TextInputDialog("");
 							dialog.setTitle("Highscore!!");
 							dialog.setHeaderText("Du hast den Highscore!");
@@ -261,11 +279,12 @@ public class VocabularyTrainerUI extends Application {
 
 							// Antwort abholen und eintragen.
 							Optional<String> result = dialog.showAndWait();
-							if (result.isPresent()){
-							    model.setScore(model.getCounter_int(), result.get());
+							if (result.isPresent()) {
+								model.setScore(model.getCounter_int(), result.get());
 							}
-							
+
 						}
+						textInputFieldV.clear();
 
 					}
 				}
@@ -329,15 +348,15 @@ public class VocabularyTrainerUI extends Application {
 			word2D.clear();
 
 		});
-		// Das Woerterbuch kann hiermit persistent werden. 
+		// Das Woerterbuch kann hiermit persistent werden.
 		persistanceD = new Button("Woerterbuch speichern");
 		persistanceD.setOnAction(e -> {
-			// try {
-			// dao.updateModel(model);
-			// } catch (IOException ex) {
-			// showAlert("Can't write to File!");
-			// ex.printStackTrace();
-			// }
+			 try {
+			 dao.updateModel(model);
+			 } catch (IOException ex) {
+			 showAlert("Can't write to File!");
+			 ex.printStackTrace();
+			 }
 		});
 		deleteD = new Button("Loesche Woerterbuch und HighScore!");
 		deleteD.setOnAction(e -> {
@@ -351,18 +370,19 @@ public class VocabularyTrainerUI extends Application {
 		getDictionaryD.setOnAction(e -> {
 			showDictionaryD.setText(model.wordListToString());
 		});
-		
+
 		highscores = new Label();
-		//Test
-//		model.setScore(5, "Chris");
-//		model.setScore(7, "Harald");
-//		model.setScore(4, "Dieter");
-//		model.setScore(5, "Griezi");
+		// Test
+		// model.setScore(5, "Chris");
+		// model.setScore(7, "Harald");
+		// model.setScore(4, "Dieter");
+		// model.setScore(5, "Griezi");
 		model.setScore(1, "Chris");
 		highscores.setText(model.highScoreToString());
 
 	}
-// Fuer DAO 
+
+	// Fuer DAO
 	private void showAlert(String message) {
 		Alert alert = new Alert(AlertType.ERROR, message);
 		alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> alert.close());
@@ -371,7 +391,8 @@ public class VocabularyTrainerUI extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Vokabeltrainer");
 		primaryStage.setScene(new Scene(createSceneGraph(), 700, 300));
-		primaryStage.show();;
+		primaryStage.show();
+		;
 
 	}
 
@@ -409,7 +430,7 @@ public class VocabularyTrainerUI extends Application {
 		box3.getChildren().addAll(highscores);
 		flow3.getChildren().addAll(choiceWord1D, choiceWord2D);
 		flow4.getChildren().addAll(word1D, word2D, addD);
-		
+
 		box2.getChildren().addAll(sentenceD, flow3, flow4, persistanceD, showDictionaryD, getDictionaryD);
 		box2.setAlignment(Pos.TOP_CENTER);
 		box2.setSpacing(10);
