@@ -349,9 +349,7 @@ public class VocabularyTrainerUI extends Application {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Wort hinzufuegen");
 					alert.setHeaderText("Fehler");
-					alert.setContentText("Eintrag nicht moeglich! "
-							+ "Bedeutet ein Wort in einer anderen Sprache dasselbe, so sollte der Anfangsbuchstabe der Sprache dem zweiten Wort "
-							+ "hinzugefuegt werden. Bsp.: Hamster -> E:Hamster");
+					alert.setContentText("Eintrag nicht moeglich!");
 					alert.showAndWait();
 				}
 			}
