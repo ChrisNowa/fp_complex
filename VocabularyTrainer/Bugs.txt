@@ -1,7 +1,11 @@
 Fehler Vokabeltrainer:
 1.Delete Button für das Löschen des Wörterbuchs eingeben.
 Fehler Woerterbuch:
-5. Das Woerterbuch muss noch persistent werden.
+Aendet man im Woerterbuch die Richtung. Bsp.Deutsch -> English und gibt dann ein bereits vorhandenes paar ein. Bsp.: Hello und Hallo,
+so wird eine eine Exception ordnungsgemäß geworfen, es wird jedoch dennoch das erste Wort eingefügt und dem zweiten die Ordernummer gegeben.
+Ich habe es vor meinen Änderungen gesehen, sodass diese nicht der Grund sein koennen. Boolsche Variablen konnten das Problem auch nicht aendern.
+Wenn ihr coverage macht, so sieht man, dass der Fehler in der addWordPair() liegen muss. Ich sehe aber keinen Grund dafuer. 
+Andersrum funktioniert alles perfekt.
 
 
 View:

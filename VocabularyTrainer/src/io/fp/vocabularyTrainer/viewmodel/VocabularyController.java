@@ -52,10 +52,10 @@ public class VocabularyController {
 	public void handleClickConfirmV(ActionEvent event) {
 
 		if (!textInputFieldV.getText().toString().isEmpty()) {
-			Word word = model.getWord1(textInputFieldV.getText());
-			Word word2 = model.getWord1(wordV.getText());
+			Word word = model.getWord1(textInputFieldV.getText(), choiceWord2V.getValue());
+			Word word2 = model.getWord1(wordV.getText(), choiceWord1V.getValue());
 			// Wenn Wort nicht im Woerterbuch enthalten ist.
-			if (!model.getWordList().contains(model.getWord1(textInputFieldV.getText()))) {
+			if (!model.getWordList().contains(model.getWord1(textInputFieldV.getText(), choiceWord2V.getValue()))) {
 				model.counter(false);
 				counterLabel.setText("Richtige Antworten: " + model.getCounter());
 				resultV.setText("Die Uebersetzung war falsch! Versuch es noch einmal.");
@@ -72,7 +72,7 @@ public class VocabularyController {
 						&& (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == true)) {
 					resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
 					wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-					model.setPrevWord(model.getWord1(wordV.getText()));
+					model.setPrevWord(model.getWord1(wordV.getText(), choiceWord1V.getValue()));
 					textInputFieldV.clear();
 					;
 					// Logik fuer Counter

@@ -26,11 +26,11 @@ public class WortBookTest {
 
 		try {
 			modelTest.addNewWordPair("Affe", Language.GERMAN, "Monkey", Language.ENGLISH);
-			assertTrue(modelTest.getWordList().contains(modelTest.getWord1("Affe")));
-			assertTrue(modelTest.getWordList().contains(modelTest.getWord1("Monkey")));
-			assertEquals(Language.GERMAN, modelTest.getWord1("Affe").getLanguage());
-			assertEquals(Language.ENGLISH, modelTest.getWord1("Monkey").getLanguage());
-			assertEquals(modelTest.getWord1("Affe").getOrderNumbers(),modelTest.getWord1("Monkey").getOrderNumbers());
+			assertTrue(modelTest.getWordList().contains(modelTest.getWord1("Affe", Language.GERMAN)));
+			assertTrue(modelTest.getWordList().contains(modelTest.getWord1("Monkey", Language.ENGLISH)));
+			assertEquals(Language.GERMAN, modelTest.getWord1("Affe",Language.GERMAN).getLanguage());
+			assertEquals(Language.ENGLISH, modelTest.getWord1("Monkey", Language.ENGLISH).getLanguage());
+			assertEquals(modelTest.getWord1("Affe", Language.GERMAN).getOrderNumbers(),modelTest.getWord1("Monkey",Language.ENGLISH).getOrderNumbers());
 			
 		} catch (WordException e) {
 			fail("Should not have thrown Exception");
@@ -42,9 +42,10 @@ public class WortBookTest {
 	public void addEqualWordTest() {
 		try {
 			modelTest.addNewWordPair("Katze", Language.GERMAN, "Katze", Language.ENGLISH);
-			fail("Should have thrown Exception");
+			assertTrue(modelTest.getWordList().contains(modelTest.getWord1("Katze",Language.GERMAN)));
 		} catch (WordException e) {
-			assertTrue(!modelTest.getWordList().contains(modelTest.getWord1("Katze")));
+		
+			fail("Should have thrown Exception");
 		}
 
 	}
@@ -67,12 +68,12 @@ public class WortBookTest {
 		try {
 			modelTest.addNewWordPair("Klar", Language.GERMAN, "Clear", Language.ENGLISH);
 			modelTest.addNewWordPair("Klar", Language.GERMAN, "Free", Language.ENGLISH);
-			assertTrue(modelTest.getWord1("Klar").getOrderNumbers().size() == 2);
-			assertTrue(modelTest.getWord1("Free").getOrderNumbers().size() == 1);
-			assertEquals(Integer.valueOf(4), modelTest.getWord1("Klar").getOrderNumbers().get(0));
-			assertEquals(Integer.valueOf(5), modelTest.getWord1("Klar").getOrderNumbers().get(1));
-			assertEquals(Integer.valueOf(4), modelTest.getWord1("Clear").getOrderNumbers().get(0));
-			assertEquals(Integer.valueOf(5), modelTest.getWord1("Free").getOrderNumbers().get(0));
+			assertTrue(modelTest.getWord1("Klar",Language.GERMAN).getOrderNumbers().size() == 2);
+			assertTrue(modelTest.getWord1("Free",Language.ENGLISH).getOrderNumbers().size() == 1);
+			assertEquals(Integer.valueOf(4), modelTest.getWord1("Klar",Language.GERMAN).getOrderNumbers().get(0));
+			assertEquals(Integer.valueOf(5), modelTest.getWord1("Klar",Language.GERMAN).getOrderNumbers().get(1));
+			assertEquals(Integer.valueOf(4), modelTest.getWord1("Clear",Language.ENGLISH).getOrderNumbers().get(0));
+			assertEquals(Integer.valueOf(5), modelTest.getWord1("Free",Language.ENGLISH).getOrderNumbers().get(0));
 		} catch (WordException e) {
 			fail("Should have thrown Exception");
 		}
@@ -83,12 +84,12 @@ public class WortBookTest {
 		try {
 			modelTest.addNewWordPair("Clear", Language.ENGLISH, "Klar", Language.GERMAN);
 			modelTest.addNewWordPair("Free", Language.ENGLISH, "Klar", Language.GERMAN);
-			assertTrue(modelTest.getWord1("Klar").getOrderNumbers().size() == 2);
-			assertTrue(modelTest.getWord1("Free").getOrderNumbers().size() == 1);
-			assertEquals(Integer.valueOf(4), modelTest.getWord1("Clear").getOrderNumbers().get(0));
-			assertEquals(Integer.valueOf(5), modelTest.getWord1("Free").getOrderNumbers().get(0));
-			assertEquals(Integer.valueOf(4), modelTest.getWord1("Klar").getOrderNumbers().get(0));
-			assertEquals(Integer.valueOf(5), modelTest.getWord1("Klar").getOrderNumbers().get(1));
+			assertTrue(modelTest.getWord1("Klar",Language.GERMAN).getOrderNumbers().size() == 2);
+			assertTrue(modelTest.getWord1("Free",Language.ENGLISH).getOrderNumbers().size() == 1);
+			assertEquals(Integer.valueOf(4), modelTest.getWord1("Clear",Language.ENGLISH).getOrderNumbers().get(0));
+			assertEquals(Integer.valueOf(5), modelTest.getWord1("Free",Language.ENGLISH).getOrderNumbers().get(0));
+			assertEquals(Integer.valueOf(4), modelTest.getWord1("Klar",Language.GERMAN).getOrderNumbers().get(0));
+			assertEquals(Integer.valueOf(5), modelTest.getWord1("Klar",Language.GERMAN).getOrderNumbers().get(1));
 		} catch (WordException e) {
 			fail("Should have thrown Exception");
 		}

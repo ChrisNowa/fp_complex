@@ -200,7 +200,7 @@ public class VocabularyTrainerUI extends Application {
 		// radom Wort generiert.
 		wordV = new Label();
 		wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-		model.setPrevWord(model.getWord1(wordV.getText()));
+		model.setPrevWord(model.getWord1(wordV.getText(), choiceWord1V.getValue()));
 		wordV.setFont(new Font(30));
 		// languageDirectionV zeigt die Übersetzungsrichtung beim Trainer an.
 		languageDirectionV = new Label();
@@ -213,10 +213,10 @@ public class VocabularyTrainerUI extends Application {
 		confirmV = new Button("Bestaetigen");
 		confirmV.setOnAction(e -> {
 			if (!textInputFieldV.getText().toString().isEmpty()) {
-				Word word = model.getWord1(textInputFieldV.getText());
-				Word word2 = model.getWord1(wordV.getText());
+				Word word = model.getWord1(textInputFieldV.getText(), choiceWord2V.getValue());
+				Word word2 = model.getWord1(wordV.getText(), choiceWord1V.getValue());
 				// Wenn Wort nicht im Woerterbuch enthalten ist.
-				if (!model.getWordList().contains(model.getWord1(textInputFieldV.getText()))) {
+				if (!model.getWordList().contains(model.getWord1(textInputFieldV.getText(), choiceWord2V.getValue()))) {
 
 					// Wenn Anzahl der Worte im Highscore drin ist, soll nach dem Namen gefragt
 					// werden.
@@ -256,7 +256,7 @@ public class VocabularyTrainerUI extends Application {
 							&& (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == true)) {
 						resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
 						wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-						model.setPrevWord(model.getWord1(wordV.getText()));
+						 model.setPrevWord(model.getWord1(wordV.getText(), choiceWord1V.getValue()));
 						textInputFieldV.clear();
 						;
 						// Logik fuer Counter
@@ -349,9 +349,7 @@ public class VocabularyTrainerUI extends Application {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Wort hinzufuegen");
 					alert.setHeaderText("Fehler");
-					alert.setContentText("Eintrag nicht moeglich! "
-							+ "Bedeutet ein Wort in einer anderen Sprache dasselbe, so sollte der Anfangsbuchstabe der Sprache dem zweiten Wort "
-							+ "hinzugefuegt werden. Bsp.: Hamster -> E:Hamster");
+					alert.setContentText("Eintrag nicht moeglich!");
 					alert.showAndWait();
 				}
 			}
@@ -383,12 +381,7 @@ public class VocabularyTrainerUI extends Application {
 		});
 
 		highscores = new Label();
-		// Test
-		// model.setScore(5, "Chris");
-		// model.setScore(7, "Harald");
-		// model.setScore(4, "Dieter");
-		// model.setScore(5, "Griezi");
-		model.setScore(1, "Chris");
+
 		highscores.setText(model.highScoreToString());
 
 	}
