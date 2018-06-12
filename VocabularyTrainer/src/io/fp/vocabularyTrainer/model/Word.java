@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Word implements Serializable{
 	private static final long serialVersionUID = 5828823486941127715L;
-//Klasse für die Wörter. Ist denke ich selbsterklärend.
+//Klasse für die Wörter. 
 private String word;
 private ArrayList<Integer> orderNumbers = new ArrayList<>();
 private Language language;
