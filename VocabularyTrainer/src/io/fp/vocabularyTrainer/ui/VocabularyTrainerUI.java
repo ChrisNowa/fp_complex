@@ -68,23 +68,23 @@ public class VocabularyTrainerUI extends Application {
 	private VocabularyTrainerDAO dao;
 
 	public void init() throws Exception {
-		// //init dao
-		// Parameters params = getParameters();
-		// List<String> paramList = params.getRaw();
-		// if (paramList.size()<1) {
-		// throw new IOException("No parameter defined for file name!");
-		// }
-		// dao = new VocabularyTrainerDAOImpl(paramList.get(0));
-		//
-		// // init model
-		// try {
-		// model = dao.readModel();
-		// } catch (IOException e) {
-		// model = dao.createModel();
-		// }
+		 //init dao
+		 Parameters params = getParameters();
+		 List<String> paramList = params.getRaw();
+		 if (paramList.size()<1) {
+		 throw new IOException("No parameter defined for file name!");
+		 }
+		 dao = new VocabularyTrainerDAOImpl(paramList.get(0));
+		
+		 // init model
+		 try {
+		 model = dao.readModel();
+		 } catch (IOException e) {
+		 model = dao.createModel();
+		 }
 
 		// init rest
-		model = new VocabularyModel();
+		
 		translationSentenceV = new Label("Uebersetze das Wort");
 		textInputFieldV = new TextField();
 		textInputFieldV.setPromptText("Uebersetzung");
@@ -332,12 +332,12 @@ public class VocabularyTrainerUI extends Application {
 		// Das Woerterbuch kann hiermit persistent werden. 
 		persistanceD = new Button("Woerterbuch speichern");
 		persistanceD.setOnAction(e -> {
-			// try {
-			// dao.updateModel(model);
-			// } catch (IOException ex) {
-			// showAlert("Can't write to File!");
-			// ex.printStackTrace();
-			// }
+			 try {
+			 dao.updateModel(model);
+			 } catch (IOException ex) {
+			 showAlert("Can't write to File!");
+			 ex.printStackTrace();
+			 }
 		});
 		deleteD = new Button("Loesche Woerterbuch und HighScore!");
 		deleteD.setOnAction(e -> {
