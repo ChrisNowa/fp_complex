@@ -68,23 +68,23 @@ public class VocabularyTrainerUI extends Application {
 	private VocabularyTrainerDAO dao;
 
 	public void init() throws Exception {
-		 //init dao
-		 Parameters params = getParameters();
-		 List<String> paramList = params.getRaw();
-		 if (paramList.size()<1) {
-		 throw new IOException("No parameter defined for file name!");
-		 }
-		 dao = new VocabularyTrainerDAOImpl(paramList.get(0));
-		
-		 // init model
-		 try {
-		 model = dao.readModel();
-		 } catch (IOException e) {
-		 model = dao.createModel();
-		 }
+		// init dao
+		Parameters params = getParameters();
+		List<String> paramList = params.getRaw();
+		if (paramList.size() < 1) {
+			throw new IOException("No parameter defined for file name!");
+		}
+		dao = new VocabularyTrainerDAOImpl(paramList.get(0));
+
+		// init model
+		try {
+			model = dao.readModel();
+		} catch (IOException e) {
+			model = dao.createModel();
+		}
 
 		// init rest
-		
+
 		translationSentenceV = new Label("Uebersetze das Wort");
 		textInputFieldV = new TextField();
 		textInputFieldV.setPromptText("Uebersetzung");
@@ -217,36 +217,40 @@ public class VocabularyTrainerUI extends Application {
 				Word word2 = model.getWord1(wordV.getText());
 				// Wenn Wort nicht im Woerterbuch enthalten ist.
 				if (!model.getWordList().contains(model.getWord1(textInputFieldV.getText()))) {
-					model.counter(false);
-					counterLabel.setText("Richtige Antworten: " + model.getCounter());
-					resultV.setText("Die Uebersetzung war falsch! Versuch es noch einmal.");
 
 					// Wenn Anzahl der Worte im Highscore drin ist, soll nach dem Namen gefragt
 					// werden.
 					if (model.checkScore(model.getCounter_int()) == true) {
 
-						TextInputDialog dialog = new TextInputDialog("");
-						dialog.setTitle("Highscore!!");
-						dialog.setHeaderText("Du hast den Highscore!");
-						dialog.setContentText("Trag hier deinen Namen ein:");
+						TextInputDialog dialog_wb = new TextInputDialog("Name");
+						dialog_wb.setTitle("Highscore!!");
+						dialog_wb.setHeaderText("Du hast den Highscore!");
+						dialog_wb.setContentText("Trag hier deinen Namen ein:");
 
 						// Antwort abholen und eintragen.
-						Optional<String> result = dialog.showAndWait();
-						if (result.isPresent()) {
-							model.setScore(model.getCounter_int(), result.get());
+						Optional<String> result_wb = dialog_wb.showAndWait();
+						if (result_wb.isPresent()) {
+							model.setScore(model.getCounter_int(), result_wb.get());
+							highscores.setText(model.highScoreToString());
+
+							// Speichern im DAO
+							try {
+								dao.updateModel(model);
+							} catch (IOException ex) {
+								showAlert("Can't write to File!");
+								ex.printStackTrace();
+							}
 						}
 
-					} else {
-
-						Alert alert = new Alert(AlertType.ERROR);
-						alert.setTitle("Wort nicht enthalten");
-						alert.setHeaderText("Fehler");
-						alert.setContentText("Dieses Wort ist nicht im Woerterbuch enthalten");
-						alert.showAndWait();
 					}
+
+					model.counter(false);
+					counterLabel.setText("Richtige Antworten: " + model.getCounter());
+					resultV.setText("Die Uebersetzung war falsch! Versuch es noch einmal.");
 					textInputFieldV.clear();
+
 				}
-				// Wenn Wort im Woerterbuch enthalten ist.
+
 				else {
 					if ((model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == true)
 							&& (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == true)) {
@@ -261,30 +265,37 @@ public class VocabularyTrainerUI extends Application {
 					}
 					if ((model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == false)
 							|| (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == false)) {
+
+						// Wenn Anzahl der Worte im Highscore drin ist, soll nach dem Namen gefragt
+						// werden.
+						if (model.checkScore(model.getCounter_int()) == true) {
+
+							TextInputDialog dialog = new TextInputDialog("Name");
+							dialog.setTitle("Highscore!!");
+							dialog.setHeaderText("Du hast den Highscore!");
+							dialog.setContentText("Trag hier deinen Namen ein:");
+							// Antwort abholen und eintragen.
+							Optional<String> result = dialog.showAndWait();
+							if (result.isPresent()) {
+								model.setScore(model.getCounter_int(), result.get());
+								highscores.setText(model.highScoreToString());
+								// Speichern im DAO
+								try {
+									dao.updateModel(model);
+								} catch (IOException ex) {
+									showAlert("Can't write to File!");
+									ex.printStackTrace();
+								}
+							}
+
+						}
+
 						resultV.setText("Die Uebersetzung war falsch! Versuche es noch einmal.");
 						textInputFieldV.clear();
 						;
 						// Logik fuer Counter
 						model.counter(false);
 						counterLabel.setText("Richtige Antworten: " + model.getCounter());
-
-						// Wenn Anzahl der Worte im Highscore drin ist, soll nach dem Namen gefragt
-						// werden.
-						if (model.checkScore(model.getCounter_int()) == true) {
-
-							TextInputDialog dialog = new TextInputDialog("");
-							dialog.setTitle("Highscore!!");
-							dialog.setHeaderText("Du hast den Highscore!");
-							dialog.setContentText("Trag hier deinen Namen ein:");
-
-							// Antwort abholen und eintragen.
-							Optional<String> result = dialog.showAndWait();
-							if (result.isPresent()) {
-								model.setScore(model.getCounter_int(), result.get());
-							}
-
-						}
-						textInputFieldV.clear();
 
 					}
 				}
@@ -351,12 +362,12 @@ public class VocabularyTrainerUI extends Application {
 		// Das Woerterbuch kann hiermit persistent werden.
 		persistanceD = new Button("Woerterbuch speichern");
 		persistanceD.setOnAction(e -> {
-			 try {
-			 dao.updateModel(model);
-			 } catch (IOException ex) {
-			 showAlert("Can't write to File!");
-			 ex.printStackTrace();
-			 }
+			try {
+				dao.updateModel(model);
+			} catch (IOException ex) {
+				showAlert("Can't write to File!");
+				ex.printStackTrace();
+			}
 		});
 		deleteD = new Button("Loesche Woerterbuch und HighScore!");
 		deleteD.setOnAction(e -> {
