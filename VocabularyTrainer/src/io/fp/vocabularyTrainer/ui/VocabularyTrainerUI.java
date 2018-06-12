@@ -383,12 +383,7 @@ public class VocabularyTrainerUI extends Application {
 		});
 
 		highscores = new Label();
-		// Test
-		// model.setScore(5, "Chris");
-		// model.setScore(7, "Harald");
-		// model.setScore(4, "Dieter");
-		// model.setScore(5, "Griezi");
-		model.setScore(1, "Chris");
+
 		highscores.setText(model.highScoreToString());
 
 	}
