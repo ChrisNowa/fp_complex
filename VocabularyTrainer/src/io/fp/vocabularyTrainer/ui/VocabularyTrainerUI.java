@@ -310,10 +310,7 @@ public class VocabularyTrainerUI extends Application {
 			choiceWord1V.setValue(model.getRememberV2());
 			choiceWord2V.setValue(model.getRememberV1());
 
-			// Hier wurde nun die Anpassung getroffen, dass wenn sich das Wort aeandert
-			// ein neues Vokabelpaar initialisiert wird, somit funktioniert diese Methode
-			// nun.
-			// Die untere Zeile wurde einfach aus der init() kopiert.
+			
 			wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 			languageDirectionV.setText(
 					"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
