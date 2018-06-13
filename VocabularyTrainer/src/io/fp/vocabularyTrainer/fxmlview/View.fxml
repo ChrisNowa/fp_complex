@@ -6,7 +6,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<<<<<<< HEAD
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="457.0" prefWidth="615.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.fp.vocabularyTrainer.viewmodel.VocabularyController">
+=======
+<TabPane fx:id="Tabpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="958.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.fp.vocabularyTrainer.viewmodel.VocabularyController">
+>>>>>>> branch 'master' of https://github.com/ChrisNowa/fp_complex.git
   <tabs>
     <Tab text="Trainer">
          <content>
@@ -49,10 +53,19 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </FlowPane>
+<<<<<<< HEAD
                   <Button fx:id="changeDirectionV" mnemonicParsing="false" onAction="#handeClickChangeDirectionV" text="Uebersetzungsrichtung aendern">
+=======
+                  <Button mnemonicParsing="false" text="Button">
+>>>>>>> branch 'master' of https://github.com/ChrisNowa/fp_complex.git
                      <VBox.margin>
                         <Insets top="30.0" />
+<<<<<<< HEAD
                      </VBox.margin></Button>
+=======
+                     </VBox.margin>
+                  </Button>
+>>>>>>> branch 'master' of https://github.com/ChrisNowa/fp_complex.git
                   <Label fx:id="resultV" text="Label">
                      <VBox.margin>
                         <Insets top="30.0" />
