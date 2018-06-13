@@ -41,7 +41,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class VocabularyTrainerUI extends Application {
-	// Endung V betrifft den Vokabeltrainer, Endung D betrifft das Woerterbuch
+	// Endung V betrifft den Vokabeltrainer, Endung D betrifft das Woerterbuch.
 	private VocabularyModel model;
 	private Label translationSentenceV;
 	private Label wordV;
