@@ -1,4 +1,4 @@
-Fehler Vokabeltrainer:
+﻿Fehler Vokabeltrainer:
 1.Delete Button für das Löschen des Wörterbuchs eingeben.
 Fehler Woerterbuch:
 Kleiner Fehler bei mehrfachwörtern
@@ -6,3 +6,4 @@ Kleiner Fehler bei mehrfachwörtern
 
 View:
 1. Es sollte noch das Design verschoenert werden.
+Aenderung fuer gitiggnore
