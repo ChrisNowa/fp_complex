@@ -28,6 +28,7 @@ public class VocabularyController {
 
 	private VocabularyModel model;
 	private VocabularyTrainerDAO dao;
+	
 	public VocabularyController() {
 		
 		dao = new VocabularyTrainerDAOImpl("Model.txt");
