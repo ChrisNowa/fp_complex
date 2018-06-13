@@ -64,7 +64,7 @@ public class VocabularyTrainerUI extends Application {
 	private ChoiceBox<Language> choiceWord1D;
 	private ChoiceBox<Language> choiceWord2D;
 	private Label highscores;
-	// hier wird das dao als Datenfeld genannt.
+	
 	private VocabularyTrainerDAO dao;
 
 	public void init() throws Exception {
