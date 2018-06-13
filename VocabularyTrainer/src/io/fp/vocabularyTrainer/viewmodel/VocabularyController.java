@@ -28,10 +28,7 @@ public class VocabularyController {
 
 	private VocabularyModel model;
 
-<<<<<<< HEAD
-=======
-	
->>>>>>> branch 'master' of https://github.com/ChrisNowa/fp_complex.git
+
 
 	public VocabularyController() {
 		model = new VocabularyModel();
