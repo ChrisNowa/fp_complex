@@ -310,7 +310,6 @@ public class VocabularyTrainerUI extends Application {
 			choiceWord1V.setValue(model.getRememberV2());
 			choiceWord2V.setValue(model.getRememberV1());
 
-			
 			wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 			languageDirectionV.setText(
 					"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
