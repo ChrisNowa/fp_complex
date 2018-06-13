@@ -27,22 +27,9 @@ import javafx.scene.control.Alert.AlertType;
 public class VocabularyController {
 
 	private VocabularyModel model;
-	private VocabularyTrainerDAO dao;
-	public VocabularyController() {
-		
-		dao = new VocabularyTrainerDAOImpl("Model.txt");
 
-		
-		try {
-			model = dao.readModel();
-		} catch (IOException e) {
-			try {
-				model = dao.createModel();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-			
-			}
-		}
+	public VocabularyController() {
+		model = new VocabularyModel();
 	}
 
 	@FXML
@@ -94,12 +81,7 @@ public class VocabularyController {
 						highscores.setText(model.highScoreToString());
 
 						// Speichern im DAO
-						try {
-							dao.updateModel(model);
-						} catch (IOException ex) {
-							
-							ex.printStackTrace();
-						}
+
 					}
 
 				}
@@ -116,7 +98,7 @@ public class VocabularyController {
 						&& (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == true)) {
 					resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
 					wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-					 model.setPrevWord(model.getWord1(wordV.getText(), choiceWord1V.getValue()));
+					model.setPrevWord(model.getWord1(wordV.getText(), choiceWord1V.getValue()));
 					textInputFieldV.clear();
 					;
 					// Logik fuer Counter
@@ -140,24 +122,19 @@ public class VocabularyController {
 							model.setScore(model.getCounter_int(), result.get());
 							highscores.setText(model.highScoreToString());
 							// Speichern im DAO
-							try {
-								dao.updateModel(model);
-							} catch (IOException ex) {
-								
-								ex.printStackTrace();
-							}
+
 						}
 
+						resultV.setText("Die Uebersetzung war falsch! Versuche es noch einmal.");
+						textInputFieldV.clear();
+						;
+						// Logik fuer Counter
+						model.counter(false);
+						counterLabel.setText("Richtige Antworten: " + model.getCounter());
+
 					}
-
-					resultV.setText("Die Uebersetzung war falsch! Versuche es noch einmal.");
-					textInputFieldV.clear();
-					;
-					// Logik fuer Counter
-					model.counter(false);
-					counterLabel.setText("Richtige Antworten: " + model.getCounter());
-
 				}
+
 			}
 		}
 
@@ -259,20 +236,11 @@ public class VocabularyController {
 
 	@FXML
 	private Button persistanceD;
-	
-	
-	
+
 	@FXML
 	public void handlePersistanceD() {
-		try {
-			dao.updateModel(model);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
 	}
-	
-	
-	
+
 	@FXML
 	private Button getDictionaryD;
 
@@ -299,19 +267,18 @@ public class VocabularyController {
 
 	public void mouseClicked1V(ActionEvent event) {
 		Language value = model.getRememberV1();
-		
-		if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
+
+		if (choiceWord1V.getValue().equals(choiceWord2V.getValue())) {
 			choiceWord1V.setValue(choiceWord2V.getValue());
 			choiceWord2V.setValue(value);
 			model.counter(false);
 			counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 		}
-		
-		
+
 		wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-		languageDirectionV.setText(
-				"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
-       
+		languageDirectionV
+				.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+
 	}
 
 	@FXML
@@ -329,18 +296,17 @@ public class VocabularyController {
 
 	public void setChoiceWord2VSetOnAction(ActionEvent event) {
 		Language value = model.getRememberV2();
-		
-		if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
+
+		if (choiceWord1V.getValue().equals(choiceWord2V.getValue())) {
 			choiceWord2V.setValue(choiceWord1V.getValue());
 			choiceWord1V.setValue(value);
 			model.counter(false);
 			counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 		}
-		
-		
-		languageDirectionV.setText(
-				"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
-      
+
+		languageDirectionV
+				.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+
 	}
 
 	@FXML
@@ -352,16 +318,14 @@ public class VocabularyController {
 		choiceWord1D.setValue(Language.GERMAN);
 	}
 
-	
-
 	public void mouseClicked1D(MouseEvent mouse) {
 		model.setRememberD1(choiceWord1D.getValue());
 	}
 
 	public void setChoiceWord1DSetOnAction(ActionEvent event) {
 		Language value = model.getRememberD1();
-		
-		if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
+
+		if (choiceWord1D.getValue().equals(choiceWord2D.getValue())) {
 			choiceWord1D.setValue(choiceWord2D.getValue());
 			choiceWord2D.setValue(value);
 			model.counter(false);
@@ -383,17 +347,17 @@ public class VocabularyController {
 	public void mouseClicked2D(MouseEvent mouse) {
 		model.setRememberD2(choiceWord2D.getValue());
 	}
-	
+
 	public void setChoiceWord2DSetOnAction(ActionEvent event) {
-		  Language value = model.getRememberD2();
-			
-			if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
-				choiceWord2D.setValue(choiceWord1D.getValue());
-				choiceWord1D.setValue(value);
-				model.counter(false);
-				counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
-			}
-			word2D.setPromptText(choiceWord2D.getValue().toString());
+		Language value = model.getRememberD2();
+
+		if (choiceWord1D.getValue().equals(choiceWord2D.getValue())) {
+			choiceWord2D.setValue(choiceWord1D.getValue());
+			choiceWord1D.setValue(value);
+			model.counter(false);
+			counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
+		}
+		word2D.setPromptText(choiceWord2D.getValue().toString());
 	}
 
 	@FXML
@@ -403,5 +367,5 @@ public class VocabularyController {
 	public void highscoreSetText() {
 		highscores.setText(model.highScoreToString());
 	}
-	
+
 }
