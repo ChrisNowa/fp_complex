@@ -1,10 +1,17 @@
 
 package io.fp.vocabularyTrainer.viewmodel;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+
+import io.fp.vocabularyTrainer.dao.VocabularyTrainerDAO;
+import io.fp.vocabularyTrainer.daoImpl.VocabularyTrainerDAOImpl;
 import io.fp.vocabularyTrainer.model.Language;
 import io.fp.vocabularyTrainer.model.VocabularyModel;
 import io.fp.vocabularyTrainer.model.Word;
 import io.fp.vocabularyTrainer.model.WordException;
+import javafx.application.Application.Parameters;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,12 +20,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
 
 public class VocabularyController {
 
 	private VocabularyModel model;
+
+<<<<<<< HEAD
+=======
+	
+>>>>>>> branch 'master' of https://github.com/ChrisNowa/fp_complex.git
 
 	public VocabularyController() {
 		model = new VocabularyModel();
@@ -52,27 +65,45 @@ public class VocabularyController {
 	public void handleClickConfirmV(ActionEvent event) {
 
 		if (!textInputFieldV.getText().toString().isEmpty()) {
-			Word word = model.getWord1(textInputFieldV.getText());
-			Word word2 = model.getWord1(wordV.getText());
+			Word word = model.getWord1(textInputFieldV.getText(), choiceWord2V.getValue());
+			Word word2 = model.getWord1(wordV.getText(), choiceWord1V.getValue());
 			// Wenn Wort nicht im Woerterbuch enthalten ist.
-			if (!model.getWordList().contains(model.getWord1(textInputFieldV.getText()))) {
+			if (!model.getWordList().contains(model.getWord1(textInputFieldV.getText(), choiceWord2V.getValue()))) {
+
+				// Wenn Anzahl der Worte im Highscore drin ist, soll nach dem Namen gefragt
+				// werden.
+				if (model.checkScore(model.getCounter_int()) == true) {
+
+					TextInputDialog dialog_wb = new TextInputDialog("Name");
+					dialog_wb.setTitle("Highscore!!");
+					dialog_wb.setHeaderText("Du hast den Highscore!");
+					dialog_wb.setContentText("Trag hier deinen Namen ein:");
+
+					// Antwort abholen und eintragen.
+					Optional<String> result_wb = dialog_wb.showAndWait();
+					if (result_wb.isPresent()) {
+						model.setScore(model.getCounter_int(), result_wb.get());
+						highscores.setText(model.highScoreToString());
+
+						// Speichern im DAO
+
+					}
+
+				}
+
 				model.counter(false);
 				counterLabel.setText("Richtige Antworten: " + model.getCounter());
 				resultV.setText("Die Uebersetzung war falsch! Versuch es noch einmal.");
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Wort nicht enthalten");
-				alert.setHeaderText("Fehler");
-				alert.setContentText("Dieses Wort ist nicht im Woerterbuch enthalten");
-				alert.showAndWait();
 				textInputFieldV.clear();
+
 			}
-			// Wenn Wort im Woerterbuch enthalten ist.
+
 			else {
 				if ((model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == true)
 						&& (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == true)) {
 					resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
 					wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-					model.setPrevWord(model.getWord1(wordV.getText()));
+					model.setPrevWord(model.getWord1(wordV.getText(), choiceWord1V.getValue()));
 					textInputFieldV.clear();
 					;
 					// Logik fuer Counter
@@ -81,16 +112,37 @@ public class VocabularyController {
 				}
 				if ((model.compareOrderNumbers(word.getOrderNumbers(), word2.getOrderNumbers()) == false)
 						|| (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == false)) {
-					resultV.setText("Die Uebersetzung war falsch! Versuche es noch einmal.");
-					textInputFieldV.clear();
-					;
-					// Logik fuer Counter
-					model.counter(false);
-					counterLabel.setText("Richtige Antworten: " + model.getCounter());
 
+					// Wenn Anzahl der Worte im Highscore drin ist, soll nach dem Namen gefragt
+					// werden.
+					if (model.checkScore(model.getCounter_int()) == true) {
+
+						TextInputDialog dialog = new TextInputDialog("Name");
+						dialog.setTitle("Highscore!!");
+						dialog.setHeaderText("Du hast den Highscore!");
+						dialog.setContentText("Trag hier deinen Namen ein:");
+						// Antwort abholen und eintragen.
+						Optional<String> result = dialog.showAndWait();
+						if (result.isPresent()) {
+							model.setScore(model.getCounter_int(), result.get());
+							highscores.setText(model.highScoreToString());
+							// Speichern im DAO
+
+						}
+
+						resultV.setText("Die Uebersetzung war falsch! Versuche es noch einmal.");
+						textInputFieldV.clear();
+						;
+						// Logik fuer Counter
+						model.counter(false);
+						counterLabel.setText("Richtige Antworten: " + model.getCounter());
+
+					}
 				}
+
 			}
 		}
+
 	}
 
 	@FXML
@@ -115,10 +167,6 @@ public class VocabularyController {
 		choiceWord1V.setValue(model.getRememberV2());
 		choiceWord2V.setValue(model.getRememberV1());
 
-		// Hier wurde nun die Anpassung getroffen, dass wenn sich das Wort aeandert
-		// ein neues Vokabelpaar initialisiert wird, somit funktioniert diese Methode
-		// nun.
-		// Die untere Zeile wurde einfach aus der init() kopiert.
 		wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 		languageDirectionV
 				.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
@@ -193,6 +241,11 @@ public class VocabularyController {
 
 	@FXML
 	private Button persistanceD;
+
+	@FXML
+	public void handlePersistanceD() {
+	}
+
 	@FXML
 	private Button getDictionaryD;
 
@@ -219,19 +272,18 @@ public class VocabularyController {
 
 	public void mouseClicked1V(ActionEvent event) {
 		Language value = model.getRememberV1();
-		
-		if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
+
+		if (choiceWord1V.getValue().equals(choiceWord2V.getValue())) {
 			choiceWord1V.setValue(choiceWord2V.getValue());
 			choiceWord2V.setValue(value);
 			model.counter(false);
 			counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 		}
-		
-		
+
 		wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-		languageDirectionV.setText(
-				"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
-       
+		languageDirectionV
+				.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+
 	}
 
 	@FXML
@@ -249,18 +301,17 @@ public class VocabularyController {
 
 	public void setChoiceWord2VSetOnAction(ActionEvent event) {
 		Language value = model.getRememberV2();
-		
-		if(choiceWord1V.getValue().equals(choiceWord2V.getValue())){
+
+		if (choiceWord1V.getValue().equals(choiceWord2V.getValue())) {
 			choiceWord2V.setValue(choiceWord1V.getValue());
 			choiceWord1V.setValue(value);
 			model.counter(false);
 			counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
 		}
-		
-		
-		languageDirectionV.setText(
-				"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
-      
+
+		languageDirectionV
+				.setText("von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
+
 	}
 
 	@FXML
@@ -272,16 +323,14 @@ public class VocabularyController {
 		choiceWord1D.setValue(Language.GERMAN);
 	}
 
-	
-
 	public void mouseClicked1D(MouseEvent mouse) {
 		model.setRememberD1(choiceWord1D.getValue());
 	}
 
 	public void setChoiceWord1DSetOnAction(ActionEvent event) {
 		Language value = model.getRememberD1();
-		
-		if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
+
+		if (choiceWord1D.getValue().equals(choiceWord2D.getValue())) {
 			choiceWord1D.setValue(choiceWord2D.getValue());
 			choiceWord2D.setValue(value);
 			model.counter(false);
@@ -303,20 +352,25 @@ public class VocabularyController {
 	public void mouseClicked2D(MouseEvent mouse) {
 		model.setRememberD2(choiceWord2D.getValue());
 	}
-	
+
 	public void setChoiceWord2DSetOnAction(ActionEvent event) {
-		  Language value = model.getRememberD2();
-			
-			if(choiceWord1D.getValue().equals(choiceWord2D.getValue())){
-				choiceWord2D.setValue(choiceWord1D.getValue());
-				choiceWord1D.setValue(value);
-				model.counter(false);
-				counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
-			}
-			word2D.setPromptText(choiceWord2D.getValue().toString());
+		Language value = model.getRememberD2();
+
+		if (choiceWord1D.getValue().equals(choiceWord2D.getValue())) {
+			choiceWord2D.setValue(choiceWord1D.getValue());
+			choiceWord1D.setValue(value);
+			model.counter(false);
+			counterLabel.setText("Zwecks Richtungswechselt auf: " + model.getCounter() + " gesetzt.");
+		}
+		word2D.setPromptText(choiceWord2D.getValue().toString());
 	}
 
 	@FXML
 	private Label highscores;
+
+	@FXML
+	public void highscoreSetText() {
+		highscores.setText(model.highScoreToString());
+	}
 
 }

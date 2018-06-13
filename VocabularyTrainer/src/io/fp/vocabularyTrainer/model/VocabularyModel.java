@@ -43,9 +43,13 @@ public class VocabularyModel implements Serializable {
 		// falls eine Liste schon existiert, darf es ja nicht ueberschrieben werden.
 	}
 
+	
+	
 	public void addNewWordPair(String l1Word, Language l1, String l2Word, Language l2) throws WordException {
+		boolean exception = false;
 		Word word1 = new Word(l1Word, orderNumber, l1);
 		Word word2 = new Word(l2Word, orderNumber, l2);
+
 		// Die Alternativen WordListen habe ich hinzugefuegt, um zu vermeiden, dass die
 		// WortListe waehrend des Lesens
 		// erweitert wird(durch add), um eine Exception zu vermeiden. Bei einem
@@ -53,36 +57,42 @@ public class VocabularyModel implements Serializable {
 		ArrayList<Word> alternativeWordList = new ArrayList<>();
 		alternativeWordList.addAll(wordList);
 		ArrayList<Word> alternativeWordList2 = new ArrayList<>();
-		// Hier verhindere ich, dass zweimal das selbe Wort eingegeben wird.
-
-		if (l1Word.equals(l2Word)) {
-			throw new WordException("Das Wort ist bereits vorhanden");
-
-		}
 
 		for (Word word : alternativeWordList) {
 
-			if (word.getWord().equals(word1.getWord())) {
+			if ((word.getWord().equals(word1.getWord())) && (word.getLanguage().equals(word1.getLanguage()))) {
+
 				for (Word wort : alternativeWordList) {
-					if (wort.getWord().equals(word2.getWord())) {
+					if ((wort.getWord().equals(word2.getWord())) && (wort.getLanguage().equals(word2.getLanguage()))) {
+											
 						throw new WordException("Beide Woerter bereits enthalten");
+						
 					}
 				}
 			}
-			if (word.getWord().equals(word1.getWord())) {
+           
+           }
+		
+           for (Word word : alternativeWordList) { 
+            if ((word.getWord().equals(word1.getWord())) && (word.getLanguage().equals(word1.getLanguage()))) {
 				word.getOrderNumbers().add(orderNumber);
 				wordList.add(word2);
 
 			}
-			if (word.getWord().equals(word2.getWord())) {
+			 if ((word.getWord().equals(word2.getWord())) && (word.getLanguage().equals(word2.getLanguage()))) {
+				
+				 
 				word.getOrderNumbers().add(orderNumber);
 				wordList.add(word1);
-
-			}
+				 
+			
+            }
 
 		}
+		
 		// Hier wird die nun aktualisierte WordList der zweiten alternativenListe
 		// hinzugefuegt
+	
 		alternativeWordList2.addAll(wordList);
 		// Wenn bis jetzt noch nicht hinzugefuegt wurde, sind die beiden alternativen
 		// Listen gleich.
@@ -94,8 +104,10 @@ public class VocabularyModel implements Serializable {
 		}
 
 		orderNumber++;
-	}
 
+	}
+	
+	
 	// Hat momentan keine bedeutung
 	public void deleteWordList() {
 		Iterator<Word> i = wordList.iterator();
@@ -147,10 +159,10 @@ public class VocabularyModel implements Serializable {
 	}
 
 	// Hier wird ein Wort zurueckgegeben, Ueber den Wort Namen
-	public Word getWord1(String wordName) {
+	public Word getWord1(String wordName , Language language) {
 		Word word = null;
 		for (Word word1 : wordList) {
-			if (word1.getWord().equals(wordName)) {
+			if ((word1.getWord().equals(wordName)) && (word1.getLanguage().equals(language))) {
 				word = word1;
 			}
 

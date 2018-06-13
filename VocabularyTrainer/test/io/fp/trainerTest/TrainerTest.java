@@ -25,7 +25,7 @@ public class TrainerTest {
 		
 		try {
 			modelTest.addNewWordPair("Blume", Language.GERMAN, "Flower", Language.ENGLISH);
-			assertEquals(true, modelTest.compareOrderNumbers(modelTest.getWord1("Blume").getOrderNumbers(), modelTest.getWord1("Flower").getOrderNumbers()));
+			assertEquals(true, modelTest.compareOrderNumbers(modelTest.getWord1("Blume", Language.GERMAN).getOrderNumbers(), modelTest.getWord1("Flower", Language.ENGLISH).getOrderNumbers()));
 		} catch (WordException e) {
 			fail("Should have not thrown Exception");
 		}
@@ -37,7 +37,7 @@ public class TrainerTest {
 			modelTest.addNewWordPair("Blume", Language.GERMAN, "Flower", Language.ENGLISH);
 			Word word1 = new Word("Cat", 10, Language.ENGLISH);
 			Word word2 = new Word("Frog", 20, Language.ENGLISH);
-			assertEquals(false, modelTest.compareLanguage(modelTest.getWord1("Blume").getLanguage(), modelTest.getWord1("Flower").getLanguage()));
+			assertEquals(false, modelTest.compareLanguage(modelTest.getWord1("Blume",Language.GERMAN).getLanguage(), modelTest.getWord1("Flower",Language.ENGLISH).getLanguage()));
 			assertEquals(true, modelTest.compareLanguage(word1.getLanguage(), word2.getLanguage()));
 		} catch (WordException e) {
 			fail("Should have not thrown Exception");

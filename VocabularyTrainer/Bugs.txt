@@ -1,7 +1,7 @@
 Fehler Vokabeltrainer:
 1.Delete Button für das Löschen des Wörterbuchs eingeben.
 Fehler Woerterbuch:
-5. Das Woerterbuch muss noch persistent werden.
+Kleiner Fehler bei mehrfachwörtern
 
 
 View:

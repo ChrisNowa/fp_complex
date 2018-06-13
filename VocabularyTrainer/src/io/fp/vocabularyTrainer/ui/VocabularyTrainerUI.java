@@ -41,7 +41,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class VocabularyTrainerUI extends Application {
-	// Endung V betrifft den Vokabeltrainer, Endung D betrifft das Woerterbuch
+	// Endung V betrifft den Vokabeltrainer, Endung D betrifft das Woerterbuch.
 	private VocabularyModel model;
 	private Label translationSentenceV;
 	private Label wordV;
@@ -64,7 +64,7 @@ public class VocabularyTrainerUI extends Application {
 	private ChoiceBox<Language> choiceWord1D;
 	private ChoiceBox<Language> choiceWord2D;
 	private Label highscores;
-	// hier wird das dao als Datenfeld genannt.
+	
 	private VocabularyTrainerDAO dao;
 
 	public void init() throws Exception {
@@ -200,7 +200,7 @@ public class VocabularyTrainerUI extends Application {
 		// radom Wort generiert.
 		wordV = new Label();
 		wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-		model.setPrevWord(model.getWord1(wordV.getText()));
+		model.setPrevWord(model.getWord1(wordV.getText(), choiceWord1V.getValue()));
 		wordV.setFont(new Font(30));
 		// languageDirectionV zeigt die Übersetzungsrichtung beim Trainer an.
 		languageDirectionV = new Label();
@@ -213,10 +213,10 @@ public class VocabularyTrainerUI extends Application {
 		confirmV = new Button("Bestaetigen");
 		confirmV.setOnAction(e -> {
 			if (!textInputFieldV.getText().toString().isEmpty()) {
-				Word word = model.getWord1(textInputFieldV.getText());
-				Word word2 = model.getWord1(wordV.getText());
+				Word word = model.getWord1(textInputFieldV.getText(), choiceWord2V.getValue());
+				Word word2 = model.getWord1(wordV.getText(), choiceWord1V.getValue());
 				// Wenn Wort nicht im Woerterbuch enthalten ist.
-				if (!model.getWordList().contains(model.getWord1(textInputFieldV.getText()))) {
+				if (!model.getWordList().contains(model.getWord1(textInputFieldV.getText(), choiceWord2V.getValue()))) {
 
 					// Wenn Anzahl der Worte im Highscore drin ist, soll nach dem Namen gefragt
 					// werden.
@@ -256,7 +256,7 @@ public class VocabularyTrainerUI extends Application {
 							&& (model.compareLanguage(word.getLanguage(), choiceWord2V.getValue()) == true)) {
 						resultV.setText("Die Uebersetzung war richtig! Naechstes Wort wurde zufaellig gewaehlt");
 						wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
-						model.setPrevWord(model.getWord1(wordV.getText()));
+						 model.setPrevWord(model.getWord1(wordV.getText(), choiceWord1V.getValue()));
 						textInputFieldV.clear();
 						;
 						// Logik fuer Counter
@@ -310,10 +310,6 @@ public class VocabularyTrainerUI extends Application {
 			choiceWord1V.setValue(model.getRememberV2());
 			choiceWord2V.setValue(model.getRememberV1());
 
-			// Hier wurde nun die Anpassung getroffen, dass wenn sich das Wort aeandert
-			// ein neues Vokabelpaar initialisiert wird, somit funktioniert diese Methode
-			// nun.
-			// Die untere Zeile wurde einfach aus der init() kopiert.
 			wordV.setText(model.getWordRandom(choiceWord1V.getValue()).getWord());
 			languageDirectionV.setText(
 					"von " + choiceWord1V.getValue().toString() + " nach " + choiceWord2V.getValue().toString());
@@ -349,9 +345,7 @@ public class VocabularyTrainerUI extends Application {
 					Alert alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Wort hinzufuegen");
 					alert.setHeaderText("Fehler");
-					alert.setContentText("Eintrag nicht moeglich! "
-							+ "Bedeutet ein Wort in einer anderen Sprache dasselbe, so sollte der Anfangsbuchstabe der Sprache dem zweiten Wort "
-							+ "hinzugefuegt werden. Bsp.: Hamster -> E:Hamster");
+					alert.setContentText("Eintrag nicht moeglich!");
 					alert.showAndWait();
 				}
 			}

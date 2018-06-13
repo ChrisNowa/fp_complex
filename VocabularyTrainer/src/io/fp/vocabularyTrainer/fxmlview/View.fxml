@@ -6,9 +6,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="902.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<<<<<<< HEAD
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="457.0" prefWidth="615.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.fp.vocabularyTrainer.viewmodel.VocabularyController">
+=======
+<TabPane fx:id="Tabpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="958.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.fp.vocabularyTrainer.viewmodel.VocabularyController">
+>>>>>>> branch 'master' of https://github.com/ChrisNowa/fp_complex.git
   <tabs>
-    <Tab text="Untitled Tab 1">
+    <Tab text="Trainer">
          <content>
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
@@ -23,14 +27,104 @@
                      </VBox.margin>
                   </Label>
                   <Label fx:id="languageDirectionV" text="Label" />
+                  <FlowPane alignment="TOP_CENTER" prefHeight="30.0" prefWidth="615.0">
+                     <children>
+                        <ChoiceBox fx:id="choiceWord1V" prefWidth="150.0" />
+                        <ChoiceBox fx:id="choiceWord2V" prefWidth="150.0">
+                           <FlowPane.margin>
+                              <Insets />
+                           </FlowPane.margin>
+                        </ChoiceBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </FlowPane>
+                  <FlowPane alignment="TOP_CENTER" prefHeight="36.0" prefWidth="615.0">
+                     <children>
+                        <TextField fx:id="textInputFieldV">
+                           <FlowPane.margin>
+                              <Insets />
+                           </FlowPane.margin>
+                        </TextField>
+                        <Button fx:id="confirmV" mnemonicParsing="false" onAction="#handleClickConfirmV" text="Bestaetigen" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </FlowPane>
+<<<<<<< HEAD
+                  <Button fx:id="changeDirectionV" mnemonicParsing="false" onAction="#handeClickChangeDirectionV" text="Uebersetzungsrichtung aendern">
+=======
+                  <Button mnemonicParsing="false" text="Button">
+>>>>>>> branch 'master' of https://github.com/ChrisNowa/fp_complex.git
+                     <VBox.margin>
+                        <Insets top="30.0" />
+<<<<<<< HEAD
+                     </VBox.margin></Button>
+=======
+                     </VBox.margin>
+                  </Button>
+>>>>>>> branch 'master' of https://github.com/ChrisNowa/fp_complex.git
+                  <Label fx:id="resultV" text="Label">
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="counterLabel" text="Label">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
                </children>
             </VBox>
          </content></Tab>
-    <Tab text="Untitled Tab 2">
+    <Tab text="Woerterbuch">
          <content>
-            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Ein neues Wort in das Woerterbuch eintragen:">
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <FlowPane alignment="TOP_CENTER" prefHeight="26.0" prefWidth="615.0">
+                     <children>
+                        <ChoiceBox fx:id="choiceWord1D" prefWidth="150.0" />
+                        <ChoiceBox fx:id="choiceWord2D" prefWidth="150.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </FlowPane>
+                  <FlowPane alignment="TOP_CENTER" prefHeight="32.0" prefWidth="615.0">
+                     <children>
+                        <TextField fx:id="word1D" />
+                        <TextField fx:id="word2D" />
+                        <Button fx:id="addD" mnemonicParsing="false" text="Button" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </FlowPane>
+                  <Button fx:id="persistanceD" mnemonicParsing="false" text="Button">
+                     <VBox.margin>
+                        <Insets top="50.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Label fx:id="showDictionaryD" text="Label">
+                     <VBox.margin>
+                        <Insets top="50.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button fx:id="getDictionaryD" mnemonicParsing="false" text="Button">
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </Button>
+               </children></VBox>
          </content></Tab>
-      <Tab text="Untitled Tab">
+      <Tab text="HighScores">
          <content>
             <VBox prefHeight="200.0" prefWidth="100.0" />
          </content>
