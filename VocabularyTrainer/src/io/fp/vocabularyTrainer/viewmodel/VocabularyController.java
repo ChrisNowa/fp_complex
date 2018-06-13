@@ -27,14 +27,8 @@ import javafx.scene.control.Alert.AlertType;
 public class VocabularyController {
 
 	private VocabularyModel model;
-<<<<<<< HEAD
-=======
-	private VocabularyTrainerDAO dao;
+
 	
-	public VocabularyController() {
-		
-		dao = new VocabularyTrainerDAOImpl("Model.txt");
->>>>>>> branch 'master' of https://github.com/ChrisNowa/fp_complex.git
 
 	public VocabularyController() {
 		model = new VocabularyModel();
